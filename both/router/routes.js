@@ -2,13 +2,9 @@ Router.route('/', {
   name: 'home'
 });
 
-Router.route('/importCsv', {
-    name: 'importCsv',
-    controller: 'ImportCsvController',
-    waitOn:function(){
-        Meteor.subscribe('country');
-        return [];
-    }
+Router.route('/importIndicator', {
+    name: 'importIndicator',
+    controller: 'ImportIndicatorController'
 });
 
 Router.route('/dashboard', {

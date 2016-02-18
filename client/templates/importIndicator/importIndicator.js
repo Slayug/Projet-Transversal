@@ -1,6 +1,6 @@
 
 
-Template.importCsv.helpers({
+Template.importIndicator.helpers({
 	countries: function(){
 		return Country.find({}, {sort: {id: 1}});
 	},
@@ -10,7 +10,7 @@ Template.importCsv.helpers({
 		});
 	}
 });
-Template.importCsv.events({
+Template.importIndicator.events({
 	"change .myFileInput": function(evt, tmpl){
 		FS.Utility.eachFile(event, function(file){
 			var theFile = new FS.File(file);
@@ -21,7 +21,9 @@ Template.importCsv.events({
 			})
 		})
 	},
-	"submit .create": function(event){
-
+	"submit .add-indicator": function(event){
+		event.preventDefault();
+		var text = event.target.text.value;
+		Meteor.call('importIndicator', text);
 	}
 });

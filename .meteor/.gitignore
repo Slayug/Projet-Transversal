@@ -1,1 +1,6 @@
 local
+.finished-upgraders
+cordova-plugins
+packages
+release
+versions

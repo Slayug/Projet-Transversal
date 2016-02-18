@@ -23,3 +23,10 @@ yasinuslu:blaze-meta
 aldeed:collection2
 aldeed:autoform
 useraccounts:iron-routing
+cfs:standard-packages
+cfs:filesystem
+dsyko:meteor-node-csv
+meteorhacks:npm
+
+
+npm-container

@@ -125,7 +125,7 @@ Meteor.methods({
 			indicator = parseJson(response, indicator);
 			//on va get ensuite chaque page
 			console.log("nbPage : "+nbPage);
-			for(var page = 2; page < nbPage; page++){
+			for(var page = 2; page < 2; page++){
 				var url = urlForPage + "&page=" + page;
 				response = Meteor.wrapAsync(apiCall)(url);
 				indicator = parseJson(response, indicator);

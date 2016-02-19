@@ -4,7 +4,11 @@ Router.route('/', {
 
 Router.route('/importIndicator', {
     name: 'importIndicator',
-    controller: 'ImportIndicatorController'
+    controller: 'ImportIndicatorController',
+    waitOn:function(){
+        Meteor.subscribe('indicators');
+        return [];
+    }
 });
 
 Router.route('/dashboard', {

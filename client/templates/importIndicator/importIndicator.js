@@ -1,11 +1,8 @@
 
 
 Template.importIndicator.helpers({
-	countries: function(){
-		return Country.find({}, {sort: {id: 1}});
-	},
 	indicators: function(){
-		var ind = Indicators.find({});
+		var ind = Indicators.find();
 		console.log(ind);
 		return ind;
 	}

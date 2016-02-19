@@ -1,36 +1,44 @@
 <template name="importIndicator">
 	<div class="template-importIndicator">
-        <div class="container">
-            <div class="row">
-					<form class="add-indicator">
-						<textarea  rows="11" cols="80" type="text" name="text">http://api.worldbank.org/fr/countries/indicators/SE.ADT.LITR.ZS</textarea>
-						<br />
-						<button name="OK">OK</button>
-					</form>
-                <br />
+		<div class="container">
+			<div class="row">
+				<form class="add-indicator">
+					<textarea  rows="11" cols="80" type="text" name="text">http://api.worldbank.org/fr/countries/indicators/SE.ADT.LITR.ZS</textarea>
+					<br />
+					<button name="OK">OK</button>
+				</form>
+				<br />
 				<table class="table table-bordered table-hover table-striped">
 					<thead>
 						<th>id</th>
-                        <th>Country</th>
-                        <th>Country Code</th>
+						<th>Country</th>
+						<th>Country Code</th>
 
 					</thead>
 					<tbody>
 						{{#each indicators }}
-							{{> indicator}}
+						{{> indicator}}
 						{{/each}}
-                    </tbody>
+					</tbody>
 				</table>
-            </div>
-        </div>
+			</div>
+		</div>
 
 
-    </div>
+	</div>
 </template>
 <template name="indicator">
 	<tr>
-		<td>{{id}}</td>
-        <td>{{name}}</td>
-        <td>{{code}}</td>
-    </tr>
+		<td>{{name}}</td>
+		<td>{{code}}</td>
+		<td>
+			{{countries}}
+		</td>
+	</tr>
+</template>
+<template name="country">
+	<tr>
+		<td>{{name}}</td>
+		<td>{{code}}</td>
+	</tr>
 </template>

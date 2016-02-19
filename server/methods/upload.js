@@ -110,7 +110,7 @@ Meteor.methods({
 			this.unblock();
 
 			//get nombre de page pour nbPerPage entrées par page
-			var nbPerPage = 496*4;
+			var nbPerPage = 496*5;
 			var urlForPage = url + "?per_page="+nbPerPage+"&date=1960:2016&format=json";
 			// asynchronous call to the dedicated API calling function
 			var response = Meteor.wrapAsync(apiCall)(urlForPage);
@@ -123,16 +123,17 @@ Meteor.methods({
 			//on traite d'abord la première page
 			var indicator = undefined;
 			indicator = parseJson(response, indicator);
+			console.log("1/"+nbPage);
 			//on va get ensuite chaque page
-			console.log("nbPage : "+nbPage);
-			for(var page = 2; page < 2; page++){
+			for(var page = 2; page < nbPage + 1; page++){
 				var url = urlForPage + "&page=" + page;
 				response = Meteor.wrapAsync(apiCall)(url);
 				indicator = parseJson(response, indicator);
-				console.log("page "+page+" OK");
+				console.log(page+"/"+nbPage);
 			}
 			//console.log(indicator);
 			Indicators.insert(indicator);
+			console.log("new indicator added");
 			return indicator;
 			//var response = HTTP.get(apiUrl).get.content;
 

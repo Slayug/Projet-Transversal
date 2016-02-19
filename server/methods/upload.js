@@ -20,8 +20,59 @@ var apiCall = function (apiUrl, callback) {
 		callback(myError, null);
 	}
 }
+var Indice = function(name, code){
+	this.name = name;
+	this.countries = {};
+	this.code = code;
+	this.type = "";
+	this.addCountry = function(country){
+		if(country instanceof Country){
+			this.countries[country.code] = country;
+		}else{
+			console.log("error instanceof");
+		}
+	}
+	this.hasCountry = function(code){
+		if(this.countries[code] == undefined){
+			return false;
+		}
+		return true;
+	}
+}
 
+var Country = function(name, code){
+	this.code = code;
+	this.name = name;
+	this.years = {};
+	this.addYear = function(year, value){
+		this.years[year] = value;
+	}
+}
+function parseJson(json, indicators, countries){
+	for(var key in json){
+        //console.log('key: '+json[key]);
+        for(var inKey in json[key]){
+            //console.log(json[key][inKey]);
+            var indicator = json[key][inKey]['indicator'];
+            if(indicator != undefined){
+                if(indicators[indicator.id] == undefined){
+                    indicators[indicator.id] = new Indice(indicator.value, indicator.id);
+                }
+            }
 
+            var country = json[key][inKey]['country'];
+            if(country != undefined){
+                if(countries[country.id] == undefined){
+					//on ajoute le pays qui n'a pas encore été ajouté
+                    countries[country.id] = new Country(country.value, country.id);
+                }else{
+					//on ajoute l'année concernée
+                    countries[country.id].addYear(json[key][inKey]['date'], json[key][inKey]['value'])
+                }
+            }
+        }
+    }
+}
 Meteor.methods({
 	'uploadFile':function(fileId, fileName){
 		var fs = Meteor.npmRequire('fs');
@@ -55,14 +106,34 @@ Meteor.methods({
 		},
 		'importIndicator': function (url) {
 			this.unblock();
-			//get nombre de page
 
-			var urlForPage = url + "?per_page=1&format=json";
-			console.log(urlForPage);
+			//get nombre de page pour nbPerPage entrées par page
+			var nbPerPage = 496*2;
+			var urlForPage = url + "?per_page="+nbPerPage+"&date=1960:2016&format=json";
 			// asynchronous call to the dedicated API calling function
 			var response = Meteor.wrapAsync(apiCall)(urlForPage);
-			console.log(response);
-			return response;
+			var nbPage = 0;
+			if(response[0] != undefined){
+				if(response[0]['pages'] != undefined){
+					nbPage = response[0]['pages'];
+				}
+			}
+			//on traite d'abord la première page
+			var indicators = {};
+			var countries = {};
+			parseJson(response, indicators, countries);
+			//on va get ensuite chaque page
+			console.log("nbPage : "+nbPage);
+			for(var page = 2; page < nbPage; page++){
+				var url = urlForPage + "&page=" + page;
+				response = Meteor.wrapAsync(apiCall)(url);
+				parseJson(response, indicators, countries);
+				console.log("page "+page+" OK");
+			}
+			console.log(indicators);
+			//console.log(countries);
+			//TODO combiner les deux tableaux pour les insert dans mongo en collection
+			return indicators;
 			//var response = HTTP.get(apiUrl).get.content;
 
 			//return response;

@@ -24,6 +24,8 @@ Template.importIndicator.events({
 	"submit .add-indicator": function(event){
 		event.preventDefault();
 		var text = event.target.text.value;
+		//TODO test si y'a plusieurs lignes de lien si c'est le cas appelé plusieurs fois importIndicator
+
 		Meteor.call('importIndicator', text);
 	}
 });

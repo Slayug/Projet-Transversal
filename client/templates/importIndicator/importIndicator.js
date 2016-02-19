@@ -4,10 +4,10 @@ Template.importIndicator.helpers({
 	countries: function(){
 		return Country.find({}, {sort: {id: 1}});
 	},
-	json: function(){
-		Meteor.call("getJson", function(error, results) {
-			console.log(results.content); //results.data should be a JSON object
-		});
+	indicators: function(){
+		var ind = Indicators.find({});
+		console.log(ind);
+		return ind;
 	}
 });
 Template.importIndicator.events({
@@ -25,7 +25,6 @@ Template.importIndicator.events({
 		event.preventDefault();
 		var text = event.target.text.value;
 		//TODO test si y'a plusieurs lignes de lien si c'est le cas appelé plusieurs fois importIndicator
-
 		Meteor.call('importIndicator', text);
 	}
 });

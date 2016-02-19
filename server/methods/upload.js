@@ -20,14 +20,14 @@ var apiCall = function (apiUrl, callback) {
 		callback(myError, null);
 	}
 }
-var Indice = function(name, code){
+var Indicator = function(name, code){
 	this.name = name;
 	this.countries = {};
 	this.code = code;
 	this.type = "";
-	this.addCountry = function(country){
+	this.addCountry = function(country, code){
 		if(country instanceof Country){
-			this.countries[country.code] = country;
+			this.countries[code] = country;
 		}else{
 			console.log("error instanceof");
 		}
@@ -40,38 +40,40 @@ var Indice = function(name, code){
 	}
 }
 
-var Country = function(name, code){
-	this.code = code;
+var Country = function(name){
+	//this.code = code;
 	this.name = name;
 	this.years = {};
 	this.addYear = function(year, value){
 		this.years[year] = value;
 	}
 }
-function parseJson(json, indicators, countries){
-	for(var key in json){
-        //console.log('key: '+json[key]);
-        for(var inKey in json[key]){
-            //console.log(json[key][inKey]);
-            var indicator = json[key][inKey]['indicator'];
-            if(indicator != undefined){
-                if(indicators[indicator.id] == undefined){
-                    indicators[indicator.id] = new Indice(indicator.value, indicator.id);
-                }
-            }
 
-            var country = json[key][inKey]['country'];
-            if(country != undefined){
-                if(countries[country.id] == undefined){
+function parseJson(json, myOwnIndicator){
+	for(var key in json){
+		for(var inKey in json[key]){
+			if(myOwnIndicator == undefined){
+				var indicator = json[key][inKey]['indicator'];
+				if(indicator != undefined){
+					myOwnIndicator = new Indicator(indicator.value, indicator.id);
+				}
+			}
+
+			var country = json[key][inKey]['country'];
+			if(country != undefined){
+				var myOwnCountry = new Country(country.value);
+				if(!myOwnIndicator.hasCountry(country.id)){
 					//on ajoute le pays qui n'a pas encore été ajouté
-                    countries[country.id] = new Country(country.value, country.id);
-                }else{
-					//on ajoute l'année concernée
-                    countries[country.id].addYear(json[key][inKey]['date'], json[key][inKey]['value'])
-                }
-            }
-        }
-    }
+					myOwnIndicator.addCountry(myOwnCountry, country.id);
+				}
+				if(json[key][inKey]['value'] != null){
+					//on ajoute l'année concernée si elle n'est pas null
+					myOwnIndicator.countries[country.id].addYear(json[key][inKey]['date'], json[key][inKey]['value']);
+				}
+			}
+		}
+	}
+	return myOwnIndicator;
 }
 Meteor.methods({
 	'uploadFile':function(fileId, fileName){
@@ -104,11 +106,11 @@ Meteor.methods({
 			console.log("name ==> "+name);
 			//fs.writeFileSync(name + ".js", "contenu du fichier", "UTF-8");
 		},
-		'importIndicator': function (url) {
+		'importIndicator': function (url, back) {
 			this.unblock();
 
 			//get nombre de page pour nbPerPage entrées par page
-			var nbPerPage = 496*2;
+			var nbPerPage = 496*4;
 			var urlForPage = url + "?per_page="+nbPerPage+"&date=1960:2016&format=json";
 			// asynchronous call to the dedicated API calling function
 			var response = Meteor.wrapAsync(apiCall)(urlForPage);
@@ -119,21 +121,19 @@ Meteor.methods({
 				}
 			}
 			//on traite d'abord la première page
-			var indicators = {};
-			var countries = {};
-			parseJson(response, indicators, countries);
+			var indicator = undefined;
+			indicator = parseJson(response, indicator);
 			//on va get ensuite chaque page
 			console.log("nbPage : "+nbPage);
 			for(var page = 2; page < nbPage; page++){
 				var url = urlForPage + "&page=" + page;
 				response = Meteor.wrapAsync(apiCall)(url);
-				parseJson(response, indicators, countries);
+				indicator = parseJson(response, indicator);
 				console.log("page "+page+" OK");
 			}
-			console.log(indicators);
-			//console.log(countries);
-			//TODO combiner les deux tableaux pour les insert dans mongo en collection
-			return indicators;
+			//console.log(indicator);
+			Indicators.insert(indicator);
+			return indicator;
 			//var response = HTTP.get(apiUrl).get.content;
 
 			//return response;

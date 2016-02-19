@@ -2,8 +2,16 @@
 	<div class="template-importIndicator">
 		<div class="container">
 			<div class="row">
+				<h2>Importer un indice:</h2>
+				<p>
+					Comment savoir quel lien mettre ?<br />
+					Par exemple quand vous consultez l'indice: <a href="http://donnees.banquemondiale.org/indicateur/SE.ENR.PRSC.FM.ZS">http://donnees.banquemondiale.org/indicateur/SE.ENR.PRSC.FM.ZS</a>
+					vous repérez qu'il y'a une sorte d'ID: <strong>SE.ENR.PRSC.FM.ZS</strong>. Vous copiez cet élément, et l'insérez après <strong>http://api.worldbank.org/fr/countries/indicators/</strong>
+					et paf vous le collez. Plus qu'à faire <strong>OK</strong>. Il y'a juste que pour le moment on peut faire que pour un lien à la fois, il y'a un TODO la dessus dans client/templates/importIndicator/importIndicator.js
+
+				</p>
 				<form class="add-indicator">
-					<textarea  rows="11" cols="80" type="text" name="text">http://api.worldbank.org/fr/countries/indicators/SE.ADT.LITR.ZS</textarea>
+					<textarea  rows="11" cols="80" type="text" name="text">http://api.worldbank.org/fr/countries/indicators/SE.ENR.PRSC.FM.ZS</textarea>
 					<br />
 					<button name="OK">OK</button>
 				</form>
@@ -21,6 +29,7 @@
 						{{/each}}
 					</tbody>
 				</table>
+				<br>
 			</div>
 		</div>
 
@@ -32,13 +41,11 @@
 		<td>{{name}}</td>
 		<td>{{code}}</td>
 		<td>
-			{{countries}}
 		</td>
 	</tr>
 </template>
 <template name="country">
 	<tr>
 		<td>{{name}}</td>
-		<td>{{code}}</td>
 	</tr>
 </template>

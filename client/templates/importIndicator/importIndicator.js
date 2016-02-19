@@ -2,7 +2,7 @@
 
 Template.importIndicator.helpers({
 	indicators: function(){
-		var ind = Indicators.find();
+		var ind = Indicators.find().fetch();
 		console.log(ind);
 		return ind;
 	}

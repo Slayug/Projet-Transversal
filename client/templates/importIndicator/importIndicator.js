@@ -1,5 +1,3 @@
-
-
 Template.importIndicator.helpers({
 	indicators: function(){
 		var ind = Indicators.find().fetch();
@@ -25,3 +23,9 @@ Template.importIndicator.events({
 		Meteor.call('importIndicator', text);
 	}
 });
+
+Template.indicator.events({
+    "click .delete": function( ){
+        Meteor.call( 'deleteIndicator', this._id );
+    }
+})

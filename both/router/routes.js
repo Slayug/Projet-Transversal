@@ -10,6 +10,14 @@ Router.route('/importIndicator', {
         return [];
     }
 });
+Router.route('/showIndicator', {
+    name: 'showIndicator',
+    controller: 'showIndicatorController',
+    waitOn: function( ){
+        Meteor.subscribe('indicators');
+        return[];
+    }
+});
 
 Router.route('/dashboard', {
   name: 'dashboard',

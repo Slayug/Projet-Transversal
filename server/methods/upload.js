@@ -138,5 +138,8 @@ Meteor.methods({
 			//var response = HTTP.get(apiUrl).get.content;
 
 			//return response;
-		}
+		},
+        'deleteIndicator': function( idIndicator ){
+            Indicators.remove( idIndicator );
+        }
 	})

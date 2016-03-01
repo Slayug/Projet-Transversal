@@ -37,3 +37,7 @@ ejson
 spacebars
 check
 http
+highcharts:highcharts-meteor
+
+
+highcharts-container

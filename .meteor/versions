@@ -50,6 +50,8 @@ ejson@1.0.7
 fastclick@1.0.7
 geojson-utils@1.0.4
 handlebars@1.0.4
+highcharts-container@1.0.0
+highcharts:highcharts-meteor@0.2.1
 hot-code-push@1.0.0
 html-tools@1.0.5
 htmljs@1.0.5

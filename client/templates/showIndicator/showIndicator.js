@@ -1,82 +1,44 @@
-Session.set( "countries", { France: 'FR', Espagne: 'ES' } );
+Session.set( "countries", [ { name: "France", code: 'FR'},
+                            { name: "Espagne", code: 'ES' } ] );
+//indices: tableaux des codes indices.
+Session.set( "indices", [ "SE.ENR.PRSC.FM.ZS", "SL.UEM.LTRM.FE.ZS" ] );
 
 Template.showIndicator.helpers({
     createChart: function(){
-        var indice = Indicators.find( { } ).fetch( )[0];
-        var years = [];
+        //Récupére les indices sélectionés
+        var indices = Indicators.find( { code: { $in: Session.get( "indices" ) } } )
+                               .fetch( );
 
-        var countries = Session.get( "countries" );
-        var dataCountries = [];
+        var datas = []
 
-        for( var country in countries ){
-            //Ajoute le pays et récupere l'index du pays dans le tableaux dataCountries.
-            var indexCountry = dataCountries.push({ 
-                name: country,
-                code: countries[ country ]
-            }) - 1;
+        //Parcourt les indices sélectionés
+        indices.forEach( function( indice ) {
+            //Sélectionne les valeurs des pays pour l'indice 
+            var countries = indice.countries;
 
-            //ajoute les années du pays actuel à l'axe des abscisse du graphe
-            var countryYears = indice.countries[ countries[ country ] ].years ;
-            for( var year in countryYears )
-                //Si l'année n'est pas présente dans l'axe des abscisse du graphe
-                if( years.indexOf( year ) === -1 )
-                    years.push( year );
-        }
-        //Tri les années par ordre chronologique
-        years.sort( function( a, b ){
-            return a - b;
+            //Récupére les pays sélectionnés
+            var countriesSelected = Session.get( "countries" );
+
+            //Parcours les pays sélectionés, récupére les valeurs pour ce pays et les ajoute à datas
+            countriesSelected.forEach( function( country ){
+                var countryYears = countries[ country.code ].years ;
+
+                //Récupére les valeurs de chaque année
+                //Ajoute les valeurs dans dataCountry sous la forme [ [ year1, value1 ], [ year2, value2] ]
+                var dataCountry = [];
+                for( var year in countryYears ){
+                    var year = parseInt( year );
+                    var value = parseFloat( countryYears[ year ] );
+                    dataCountry.push( new Array( year, value ) );
+                }
+
+                //Ajoute les donnée dans datas
+                datas.push( {
+                    name: country.name,
+                    data: dataCountry
+                } );
+            });
         });
-
-        var France = indice.countries[ Session.get( "countries" )[ "France" ] ];
-        var Espagne = indice.countries[ Session.get( "countries" )[ "Espagne" ] ] ;
-
-        var a1 = [] ;
-        var a2 = [] ;
-        var b1 = [] ;
-
-        for( var year in France.years ){
-            a2.push( year );
-        }
-        for( var year in Espagne.years ){
-            if( a2.indexOf( year ) === -1 ){
-                a2.push( year );
-            }
-        }
-        a2.sort( function( a, b ){
-            return a - b;
-        } );
-        for( var i = 0; i < a2.length; ++i ){
-        }
-
-        for( var i = 0; i < a2.length; ++i ){
-            //S'il n'y a pas de valeur pour cette année
-            if( France.years[ a2[ i ] ] === undefined && i > 0 ){
-                var value = France.years[ a2[ i - 1 ] ];
-                a1.push( value / 2 * 100 );
-            }
-            //Si c'est la premiere année et qu'il n'y a pas de valeurs
-            else if( France.years[ a2[ i ] ] === undefined ){
-                a1.push( 0 );
-            }
-            else{
-                var value = France.years[ a2[ i ] ];
-                a1.push( value / 2 * 100 );
-            }
-            //S'il n'y a pas de valeur pour cette année
-            if( Espagne.years[ a2[ i ] ] === undefined && i > 0 ){
-                var value = Espagne.years[ a2[ i - 1 ] ];
-                b1.push( value / 2 * 100 );
-            }
-            //Si c'est la premiere année et qu'il n'y a pas de valeurs
-            else if( Espagne.years[ a2[ i ] ] === undefined ){
-                b1.push( 0 );
-            }
-            else{
-                var value = Espagne.years[ a2[ i ] ];
-                b1.push( value / 2 * 100 );
-            }
-        }
-        
 
         //When everything else is finished, draw the graph
         Meteor.defer( function( ){
@@ -87,38 +49,23 @@ Template.showIndicator.helpers({
                 title: {
                     text: 'The Test'
                 },
-                //Set the x Axis
-                xAxis: {
-                    categories: a2
-                },
                 //Set the y Axis
                 yAxis: {
                     //Title of the y Axis
                     title:{
                         text: 'yTest'
-                    },
-                    //Define y axis lines in the background
-                    plotLines: [{
-                        value: 50,
-                        width: 2,
-                        color: '#808080'
-                    }]
+                    }
                 },
+                //Set the layout and the legend of the chart
                 legend: {
                     layout: 'vertical',
                     align: 'right',
                     verticalAlign: 'middle',
                     borderWidth: 0
                 },
-                //Data
-                series: [{
-                    name: 'France',
-                    data: a1
-                },{ 
-                    name: 'Espagne',
-                    data: b1
-                }]
+                //Datas
+                series: datas 
             });
         });
     }
-})
+});

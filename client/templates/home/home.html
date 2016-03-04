@@ -1,4 +1,46 @@
 <template name="home">
-    <a href="/importIndicator">Importer un indice</a><br/>
-    <a href="/showIndicator">Voir un indice</a>
+    <div id="container-left" class="container-column col-lg-2 col-md-2">
+        <h3><i class="fa fa-line-chart"></i>Indices</h3>
+        <div class="search">
+            <form>
+                <input class="search-input-indicator" type="text" name="search-indicator" title="Indiquez l'indice que vous voulez rechercher..">
+                <div class="fa fa-search fa-2x search-input-indicator-submit"></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="container-middle" class="col-lg-8 col-md-8">
+        <div id="container-header-date" class="container-header">
+            <i class="fa fa-calendar"></i>
+            <span>Date de début: </span><input type="date" class="year-picker" />
+            <span>Date de fin: </span><input type="date" class="year-picker" />
+        </div>
+        <div id="container-header-indicator" class="container-header">
+            <i class="fa fa-line-chart"></i>
+            <span>Indice(s) séléctionnés: </span>
+        </div>
+        <div id="container-header-economie" class="container-header">
+            <i class="fa fa-line-chart"></i>
+            <span>Indice(s) séléctionnés: </span>
+        </div>
+
+        <a href="/importIndicator">Importer un indice</a><br/>
+        <a href="/showIndicator">Voir un indice</a>
+
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+
+        {{> showIndicator }}
+    </div>
+
+    <div id="container-right" class="container-column col-lg-2 col-md-2">
+        <h3>Économies</h3>
+        <div class="search">
+            <form>
+                <input class="search-input-indicator" type="text" name="search-indicator" title="Indiquez l'économie que vous voulez rechercher..">
+                <div class="fa fa-search fa-2x search-input-indicator-submit"></div>
+            </form>
+        </div>
+    </div>
+
+
 </template>

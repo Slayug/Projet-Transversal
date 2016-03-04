@@ -13,7 +13,7 @@ Template.showIndicator.helpers({
 
         //Parcourt les indices sélectionés
         indices.forEach( function( indice ) {
-            //Sélectionne les valeurs des pays pour l'indice 
+            //Sélectionne les valeurs des pays pour l'indice
             var countries = indice.countries;
 
             //Récupére les pays sélectionnés
@@ -42,7 +42,6 @@ Template.showIndicator.helpers({
 
         //When everything else is finished, draw the graph
         Meteor.defer( function( ){
-
             //Call the Highcharts functions
             Highcharts.chart( 'chart', {
                 //Title of the chart
@@ -64,7 +63,7 @@ Template.showIndicator.helpers({
                     borderWidth: 0
                 },
                 //Datas
-                series: datas 
+                series: datas
             });
         });
     }

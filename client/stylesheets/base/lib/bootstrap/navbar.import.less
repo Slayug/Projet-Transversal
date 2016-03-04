@@ -11,9 +11,9 @@
 .navbar {
   position: relative;
   min-height: @navbar-height; // Ensure a navbar always shows (e.g., without a .navbar-brand in collapsed mode)
-  margin-bottom: @navbar-margin-bottom;
-  border: 1px solid transparent;
-
+  //margin-bottom: @navbar-margin-bottom;
+ // border: 1px solid transparent;
+  border-bottom: 3px solid #b3b3b3;
   // Prevent floats from breaking the navbar
   &:extend(.clearfix all);
 
@@ -164,10 +164,10 @@
 .navbar-brand {
   float: left;
   padding: @navbar-padding-vertical @navbar-padding-horizontal;
-  font-size: @font-size-large;
   line-height: @line-height-computed;
   height: @navbar-height;
-
+  font-family: 'Candara';
+  font-size: floor((@font-size-base * 2.15));
   &:hover,
   &:focus {
     text-decoration: none;

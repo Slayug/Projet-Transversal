@@ -1,7 +1,8 @@
-<template name="importIndicator">
-	<div class="template-importIndicator">
+<template name="manageIndicator">
+	<div class="template-manageIndicator">
 		<div class="container">
 			<div class="row">
+				<button class="cat" name="cat">importe categories</button>
 				<h2>Importer un indice:</h2>
 				<p>
 					Comment savoir quel lien mettre ?<br />
@@ -20,8 +21,8 @@
 					<thead>
 						<th>Indicator</th>
 						<th>Code</th>
-						<th>Country</th>
-
+						<th>Catégorie</th>
+						<th>Supprimer</th>
 					</thead>
 					<tbody>
 						{{#each indicators }}
@@ -38,15 +39,23 @@
 </template>
 <template name="indicator">
 	<tr>
-		<td>{{name}}</td>
+		<td>{{name}}{{id_category}}</td>
 		<td>{{code}}</td>
+		<td>
+			<select class="select-category" id="category-for-{{ _id }}">
+				{{#each categories}}
+				{{> category}}
+				{{/each}}
+			</select>
+		</td>
 		<td>
             <button class="delete">&times;</button>
 		</td>
 	</tr>
 </template>
-<template name="country">
-	<tr>
-		<td>{{name}}</td>
-	</tr>
+<template name="category">
+	<option value="{{_id}}"
+		selected="{{#if equals _id ../id_category}}selected{{/if}}">
+	{{name}}
+	</option>
 </template>

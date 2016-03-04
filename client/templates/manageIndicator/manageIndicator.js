@@ -1,11 +1,10 @@
-Template.importIndicator.helpers({
+Template.manageIndicator.helpers({
 	indicators: function(){
 		var ind = Indicators.find().fetch();
-		console.log(ind);
 		return ind;
 	}
 });
-Template.importIndicator.events({
+Template.manageIndicator.events({
 	"change .myFileInput": function(evt, tmpl){
 		FS.Utility.eachFile(event, function(file){
 			var theFile = new FS.File(file);
@@ -27,5 +26,8 @@ Template.importIndicator.events({
 Template.indicator.events({
     "click .delete": function( ){
         Meteor.call( 'deleteIndicator', this._id );
-    }
+    },
+	"click .cat":function(){
+		Meteor.call('createCategories');
+	}
 })

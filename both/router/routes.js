@@ -1,13 +1,20 @@
 Router.route('/', {
-  name: 'home'
+  name: 'home',
+  waitOn: function( ){
+      Meteor.subscribe('indicators');
+      return[];
+  }
 });
 
-Router.route('/importIndicator', {
-    name: 'importIndicator',
-    controller: 'ImportIndicatorController',
+Router.route('/manageIndicator', {
+    name: 'manageIndicator',
+    controller: 'ManageIndicatorController',
     waitOn:function(){
         Meteor.subscribe('indicators');
         return [];
+    },
+    subscriptions:function(){
+        this.subscribe('categories');
     }
 });
 Router.route('/showIndicator', {

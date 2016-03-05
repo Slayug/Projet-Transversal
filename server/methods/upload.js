@@ -85,10 +85,12 @@ Meteor.methods({
 				fs.createReadStream(filePath),
 				{'escape':'\\'})
 				.on('record', Meteor.bindEnvironment(function(row, index){
-					Country.insert({
-						'id':index,
-						'name':row[0],
+					Countries.insert({
+						'name_en':row[0],
 						'code':row[1],
+						'region_en':row[2],
+						'name_fr':row[3],
+						'region_fr':row[4]
 					})
 				}, function(error){
 					console.log(error);
@@ -123,21 +125,18 @@ Meteor.methods({
 			//on traite d'abord la première page
 			var indicator = undefined;
 			indicator = parseJson(response, indicator);
-			console.log("1/"+nbPage);
+			console.log(url+" - 1/"+nbPage);
 			//on va get ensuite chaque page
 			for(var page = 2; page < nbPage + 1; page++){
 				var url = urlForPage + "&page=" + page;
 				response = Meteor.wrapAsync(apiCall)(url);
 				indicator = parseJson(response, indicator);
-				console.log(page+"/"+nbPage);
+				console.log(url+" - "+page+"/"+nbPage);
 			}
 			//console.log(indicator);
 			Indicators.insert(indicator);
 			console.log("new indicator added");
 			return indicator;
-			//var response = HTTP.get(apiUrl).get.content;
-
-			//return response;
 		},
         'deleteIndicator': function( idIndicator ){
             Indicators.remove( idIndicator );

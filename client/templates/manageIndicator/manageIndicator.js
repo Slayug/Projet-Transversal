@@ -1,7 +1,6 @@
 Template.manageIndicator.helpers({
 	indicators: function(){
 		var ind = Indicators.find().fetch();
-		console.log(ind);
 		return ind;
 	}
 });
@@ -30,7 +29,17 @@ Template.manageIndicator.events({
 		event.preventDefault();
 		var text = event.target.text.value;
 		//TODO test si y'a plusieurs lignes de lien si c'est le cas appelé plusieurs fois importIndicator
-		Meteor.call('importIndicator', text);
+		var lines = [];
+		if(/\r/.exec(text)){
+			lines = text.split('\r');
+		}else if(/\n/.exec(text)){
+			lines = text.split('\n');
+		}else{
+			lines.push(text);
+		}
+		for(var l = 0; l < lines.length; l++){
+			Meteor.call('importIndicator', 'http://api.worldbank.org/fr/countries/indicators/'+lines[l]);
+		}
 	},
 	"click .cat":function(){
 		Meteor.call('createCategories');

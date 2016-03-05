@@ -60,6 +60,10 @@ SL.UEM.LTRM.FE.ZS</textarea>
 		<td>{{code}}</td>
 		<td>
 			<select class="select-category" id="category-for-{{ _id }}">
+				{{#if equals id_category undefined}}
+				<option value="" selected="selected">
+				</option>
+				{{/if}}
 				{{#each categories}}
 				{{> category}}
 				{{/each}}

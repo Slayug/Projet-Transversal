@@ -7,6 +7,9 @@ Template.manageIndicator.helpers({
 Template.indicator.helpers({
 	categories:function(){
 		return Categories.find();
+	},
+	equals: function(a, b){
+		return a === b;
 	}
 });
 Template.category.helpers({

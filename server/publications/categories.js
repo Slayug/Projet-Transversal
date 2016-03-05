@@ -1,3 +1,7 @@
-Meteor.publish('categories', function(){
-	return Categories.find({});
-})
+Meteor.publishComposite("categories", function() {
+  return {
+    find: function() {
+      return Categories.find({});
+    }
+  }
+});

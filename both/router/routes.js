@@ -2,7 +2,10 @@ Router.route('/', {
   name: 'home',
   waitOn: function( ){
       Meteor.subscribe('indicators');
-      return[];
+      return [];
+  },
+  subscriptions: function(){
+      this.subscribe('categories');
   }
 });
 

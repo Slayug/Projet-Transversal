@@ -46,9 +46,11 @@
             </form>
         </div>
         <div>
+            <ul>
             {{#each countries}}
-            {{> country}}
+                {{> homeCountry}}
             {{/each}}
+            </ul>
         </div>
     </div>
 
@@ -74,9 +76,11 @@
 </template>
 <template name="homeIndicator">
     <li>
-        <input type="checkbox" class="checkIndicator" value="{{code}}">{{name}}
+        <input type="checkbox" class="checkIndicator">{{name}}
     </li>
 </template>
-<template name="country">
-
+<template name="homeCountry">
+    <li>
+        <input type="checkbox" class="checkCountry">{{name}}
+    </li>
 </template>

@@ -1,5 +1,4 @@
-Session.set( "countries", [ { name: "France", code: 'FR'},
-                            { name: "Espagne", code: 'ES' } ] );
+Session.set( "countries", [ ] );
 //indices: tableaux des codes indices.
 Session.set( "indices", [ ] );
 

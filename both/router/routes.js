@@ -2,6 +2,7 @@ Router.route('/', {
   name: 'home',
   waitOn: function( ){
       Meteor.subscribe('indicators');
+      Meteor.subscribe('countries');
       return [];
   },
   subscriptions: function(){

@@ -36,14 +36,12 @@ Template.homeIndicator.events({
     },
     "click .checkCountry": function( ){
         //Get the countries. It's an array
-        console.log( "CLicked" );
         var countries = Session.get( "countries" );
         //If the country is already checked
         if( countries.includes( this.code ) ){
             //Remove the country from the countries
             countries.splice( countries.indexOf( { name: this.name, code: this.code } ), 1 );
             //Update the session
-            console.log( "Dans countries : "+countries );
             Session.set( "countries", countries );
         }
         //If the country have been just checked
@@ -51,11 +49,39 @@ Template.homeIndicator.events({
             //Add the country to the indices
             countries.push( { name: this.name, code: this.code } );
             //Update the session
-            console.log( "Pas dans countries : "+countries );
             Session.set( "countries", countries );
         }
-    },
-    "click .test": function(){
-        console.log( "Test click" );
+    }
+});
+
+Template.homeCountry.events({
+    "click .checkCountry": function( ){
+        //Get the countries. It's an array
+        var countries = Session.get( "countries" );
+
+        //Determine if the country is already checked
+        //Is so, index check equal the index country in countries
+        var indexCheck = -1;
+        for( var i = 0; i < countries.length; ++i ){
+            if( countries[ i ].code === this.code ){
+                indexCheck = i;
+                i = countries.length
+            }
+        }
+        //If the country is already checked
+        if( indexCheck > -1 ){
+            //Remove the country from the countries
+            countries.splice( indexCheck, 1 );
+            //Update the session
+            Session.set( "countries", countries );
+        }
+        //If the country have been just checked
+        else{
+            //Add the country to the indices
+            countries.push( { name: this.name, code: this.code } );
+            //Update the session
+            Session.set( "countries", countries );
+        }
+        console.log( countries );
     }
 });

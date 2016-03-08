@@ -36,25 +36,22 @@
 
         {{> showIndicator }}
     </div>
-
     <div id="container-right" class="container-column col-lg-2 col-md-2">
         <h3><i class="fa fa-globe"></i> Économies</h3>
         <div class="search">
             <form>
-                <input class="search-input-indicator" type="text" name="search-indicator" title="Indiquez l'économie que vous voulez rechercher..">
+                <input class="search-input-indicator" type="text" name="search-indicator" title="Indiquez l'économie que vous voulez rechercher.." />
                 <div class="fa fa-search fa-2x search-input-indicator-submit"></div>
             </form>
         </div>
         <div>
             <ul>
-            {{#each countries}}
-                {{> homeCountry}}
-            {{/each}}
+                {{#each countries}}
+                    {{> homeCountry }}
+                {{/each}}
             </ul>
         </div>
     </div>
-
-
 </template>
 <template name="homeCategory">
     <div class="panel panel-default category">

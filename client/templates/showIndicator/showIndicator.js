@@ -1,7 +1,7 @@
 Session.set( "countries", [ { name: "France", code: 'FR'},
                             { name: "Espagne", code: 'ES' } ] );
 //indices: tableaux des codes indices.
-Session.set( "indices", [ "SE.ENR.PRSC.FM.ZS", "SL.UEM.LTRM.FE.ZS" ] );
+Session.set( "indices", [ ] );
 
 Template.showIndicator.helpers({
     createChart: function(){

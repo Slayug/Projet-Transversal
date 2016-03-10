@@ -1,17 +1,19 @@
-<template name="importCsv">
-	<div class="template-importCsv">
+<template name="manageCountries">
+	<div class="template-manageCountries">
         <div class="container">
             <div class="row">
                 <p>
-                    <button type="button" class="btn btn-default btn-file">
-                        Import CSV <input type="file" class="myFileInput" name="myFileInput" value="" />
-                    </button>
+					Scan depuis:<br>
+					<a href="http://api.worldbank.org/fr/country?per_page=300&format=json">http://api.worldbank.org/fr/country?per_page=300&format=json</a><br>
+					<a href="http://api.worldbank.org/fr/country?per_page=300&format=json">http://api.worldbank.org/fr/country?per_page=300&format=json</a><br>
+                    <button type="button" class="import btn btn-default btn-file">Importer</button>
                 </p>
                 <br />
                 <table class="table table-bordered table-hover table-striped">
                     <thead>
 						<th>Drapeau</th>
-                        <th>Nom</th>
+                        <th>NomFR</th>
+                        <th>NomEN</th>
                         <th>Code</th>
                         <th>Région</th>
                     </thead>
@@ -31,7 +33,8 @@
     <tr>
 		<td><img src="/images/flags/16/{{name_en}}.png" /></td>
         <td>{{name_fr}}</td>
+        <td>{{name_en}}</td>
         <td>{{code}}</td>
-        <td>{{region_fr}}</td>
+        <td>{{region_name_fr}}</td>
     </tr>
 </template>

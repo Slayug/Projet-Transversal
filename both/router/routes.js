@@ -34,9 +34,9 @@ Router.route('/dashboard', {
   name: 'dashboard',
   controller: 'DashboardController'
 });
-Router.route('/importCsv', {
-    name: 'importCsv',
-    controller: 'ImportCsvController',
+Router.route('/manageCountries', {
+    name: 'manageCountries',
+    controller: 'ManageCountriesController',
     waitOn:function(){
         Meteor.subscribe('countries');
         return [];

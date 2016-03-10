@@ -18,16 +18,6 @@ Template.category.helpers({
 	}
 });
 Template.manageIndicator.events({
-	"change .myFileInput": function(evt, tmpl){
-		FS.Utility.eachFile(event, function(file){
-			var theFile = new FS.File(file);
-			Uploads.insert(theFile, function(err, fileObj){
-				if(!err){
-					Meteor.call('uploadFile', fileObj._id, file.name);
-				}
-			})
-		})
-	},
 	"submit .add-indicator": function(event){
 		event.preventDefault();
 		var text = event.target.text.value;

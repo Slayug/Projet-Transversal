@@ -28,6 +28,7 @@ function parseJsonCountries(jsonFR, jsonEN){
         for(var inKey in jsonFR[key]){
 	        var _id_country = jsonFR[key][inKey]["id"];
             var _code = jsonFR[key][inKey]["iso2Code"];
+			var _value = jsonFR[key][inKey]["name"];
             var _name_fr = jsonFR[key][inKey]["name"];
             var _name_en = jsonEN[key][inKey]["name"];
             var _capital_fr = jsonFR[key][inKey]["capitalCity"];
@@ -49,6 +50,7 @@ function parseJsonCountries(jsonFR, jsonEN){
             Countries.insert({
 							id: _id_country,
                             code: _code,
+							value: _value,
                             name_fr: _name_fr,
                             name_en: _name_en,
                             capital_fr: _capital_fr,

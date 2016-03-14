@@ -17,9 +17,6 @@ Template.home.helpers({
 		});
 	}
 });
-Template.home.autoCompleteCountry = function(){
-	return Countries.find().fetch();
-}
 Template.homeCategory.helpers({
 	indicesOf: function(idCategory){
 		return Indicators.find( { id_category: { $in: [idCategory]} } );

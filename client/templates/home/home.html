@@ -52,7 +52,7 @@
             placeholder="Une économie"
             autocomplete="off"
             spellcheck="off"
-            data-source="autoCompleteCountry"
+            data-source="countries"
             data-template="tipCountry"/>
             <div class="fa fa-search fa-2x search-input-submit"></div>
         </div>
@@ -97,5 +97,5 @@
     </li>
 </template>
 <template name="tipCountry">
-    <span><img src="/images/flags/16/{{name_en}}.png" alt="{{name_fr}}" />{{name_fr}}</span>
+    <span><img src="/images/flags/16/{{name_en}}.png" alt="{{name_fr}}" /> - {{name_fr}}</span>
 </template>

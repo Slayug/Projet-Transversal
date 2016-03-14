@@ -1,29 +1,3 @@
-var Indicator = function(name, code){
-	this.name = name;
-	this.countries = {};
-	this.code = code;
-	this.type = "";
-	this.addCountry = function(country, code){
-		if(country instanceof Country){
-			this.countries[code] = country;
-		}else{
-			console.log("error instanceof");
-		}
-	}
-	this.hasCountry = function(code){
-		if(this.countries[code] == undefined){
-			return false;
-		}
-		return true;
-	}
-}
-var Country = function(name){
-	this.name = name;
-	this.years = {};
-	this.addYear = function(year, value){
-		this.years[year] = value;
-	}
-}
 function parseJson(json, myOwnIndicator){
 	for(var key in json){
 		for(var inKey in json[key]){
@@ -73,6 +47,10 @@ var apiCall = function (apiUrl, callback) {
 	}
 }
 Meteor.methods({
+	'testIndicator':function(){
+		console.log('toast');
+		new Indicator("ab", 67);
+	},
 	'importIndicator': function (url, back) {
 		this.unblock();
 		//get nombre de page pour nbPerPage entrées par page

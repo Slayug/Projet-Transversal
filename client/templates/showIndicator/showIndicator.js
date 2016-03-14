@@ -14,7 +14,7 @@ Template.showIndicator.helpers({
         indices.forEach( function( indice ) {
             //Sélectionne les valeurs des pays pour l'indice
             var countries = indice.countries;
-
+            console.log(indice);
             //Récupére les pays sélectionnés
             var countriesSelected = Session.get( "countries" );
 

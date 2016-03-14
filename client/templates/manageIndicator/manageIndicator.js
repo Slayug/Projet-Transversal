@@ -36,6 +36,9 @@ Template.manageIndicator.events({
 	},
 	"click .cat":function(){
 		Meteor.call('createCategories');
+	},
+	"click .toast":function(){
+		Meteor.call('testIndicator');
 	}
 });
 

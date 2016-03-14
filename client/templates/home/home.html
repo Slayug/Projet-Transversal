@@ -32,7 +32,8 @@
         </div>
 
         <a style="margin-left:20px;" href="/manageIndicator">Gestion des indices <i class="fa fa-circle-o-notch fa-spin"></i></a>
-
+        <br>
+        <a style="margin-left:20px;" href="/manageCountries">Gestion des pays</a>
 
         {{> showIndicator }}
     </div>
@@ -78,6 +79,6 @@
 </template>
 <template name="homeCountry">
     <li>
-        <input type="checkbox" class="checkCountry">{{name_fr}}
+        <input type="checkbox" class="checkCountry">{{name_fr}} <img src="/images/flags/16/{{name_en}}.png" alt="{{name_fr}}" />
     </li>
 </template>

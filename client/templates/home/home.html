@@ -2,10 +2,15 @@
     <div id="container-left" class="container-column col-lg-2 col-md-2">
         <h3><i class="fa fa-line-chart"></i> Indices</h3>
         <div class="search">
-            <form>
-                <input class="search-input-indicator" type="text" name="search-indicator" title="Indiquez l'indice que vous voulez rechercher..">
-                <div class="fa fa-search fa-2x search-input-indicator-submit"></div>
-            </form>
+            <input class="form-control typeahead"
+            type="text"
+            name="search-indicator"
+            title="Indiquez l'indice que vous voulez rechercher.."
+            placeholder="Un indice"
+            autocomplete="off"
+            spellcheck="off"
+            data-source="autoCompleteIndicator"/>
+            <div class="fa fa-search fa-2x search-input-submit"></div>
         </div>
         <div id="categories-list">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -40,24 +45,33 @@
     <div id="container-right" class="container-column col-lg-2 col-md-2">
         <h3><i class="fa fa-globe"></i> Économies</h3>
         <div class="search">
-            <form>
-                <input class="search-input-indicator" type="text" name="search-indicator" title="Indiquez l'économie que vous voulez rechercher.." />
-                <div class="fa fa-search fa-2x search-input-indicator-submit"></div>
-            </form>
+            <input class="form-control typeahead"
+            type="text"
+            name="search-country"
+            title="Indiquez l'économie que vous voulez rechercher.."
+            placeholder="Une économie"
+            autocomplete="off"
+            spellcheck="off"
+            data-source="autoCompleteCountry"
+            data-template="tipCountry"/>
+            <div class="fa fa-search fa-2x search-input-submit"></div>
         </div>
+
+        <!--
         <div>
-            <ul>
-                {{#each countries}}
-                    {{> homeCountry }}
-                {{/each}}
-            </ul>
-        </div>
-    </div>
+        <ul>
+        {{#each countries}}
+        {{> homeCountry }}
+        {{/each}}
+    </ul>
+</div>
+-->
+</div>
 </template>
 <template name="homeCategory">
     <div class="panel panel-default category">
         <div class="panel-heading" role="tab" id="heading{{_id}}">
-            <h4 class="panel-titile"><a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{_id}}" aria-expanded="false" aria-controls="collapse{{_id}}">
+            <h4 class="panel-title"><a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{_id}}" aria-expanded="false" aria-controls="collapse{{_id}}">
                 {{name}} ></a>
             </h4>
         </div>
@@ -81,4 +95,7 @@
     <li>
         <input type="checkbox" class="checkCountry">{{name_fr}} <img src="/images/flags/16/{{name_en}}.png" alt="{{name_fr}}" />
     </li>
+</template>
+<template name="tipCountry">
+    <span><img src="/images/flags/16/{{name_en}}.png" alt="{{name_fr}}" />{{name_fr}}</span>
 </template>

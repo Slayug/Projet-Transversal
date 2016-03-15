@@ -1,72 +1,112 @@
 <template name="home">
     <div id="container-left" class="container-column col-lg-2 col-md-2">
-        <h3><i class="fa fa-line-chart"></i> Indices</h3>
-        <div class="search">
-            <input class="form-control typeahead"
-            type="text"
-            name="search-indicator"
-            title="Indiquez l'indice que vous voulez rechercher.."
-            placeholder="Un indice"
-            autocomplete="off"
-            spellcheck="off"
-            data-source="autoCompleteIndicator"/>
-            <div class="fa fa-search fa-2x search-input-submit"></div>
-        </div>
-        <div id="categories-list">
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                {{#each categories}}
-                {{> homeCategory}}
-                {{/each}}
+
+
+                <!--
+                <h3><i class="fa fa-globe"></i> Économies</h3>
+                <div class="search">
+                <input class="form-control typeahead"
+                type="text"
+                name="search-country"
+                title="Indiquez l'économie que vous voulez rechercher.."
+                placeholder="Une économie"
+                autocomplete="off"
+                spellcheck="off"
+                data-source="countries"
+                data-template="tipCountry"/>
+                <div class="fa fa-search fa-2x search-input-submit"></div>
             </div>
-        </div>
-    </div>
+        -->
 
-    <div id="container-middle" class="col-lg-8 col-md-8">
-        <div id="container-header-date" class="container-header">
-            <i class="fa fa-calendar"></i>
-            <span>Date de début: </span><input type="year" class="year-picker" />
-            <span>Date de fin: </span><input type="year" class="year-picker" />
-        </div>
-        <div id="container-header-indicator" class="container-header">
-            <i class="fa fa-line-chart"></i>
-            <span>Indice(s) séléctionnés: </span>
-        </div>
-        <div id="container-header-economie" class="container-header">
-            <i class="fa fa-globe"></i>
-            <span>Économie(s) séléctionnées: </span>
-        </div>
+        <form class="form-inline search">
+            <label for="search-country">
+                <i class="fa fa-globe"></i> Indiquez une économie:
+            </label>
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text"
+                    class="form-control typeahead"
+                    name="search-country"
+                    title="Indiquez l'économie que vous voulez rechercher.."
+                    placeholder="Une économie"
+                    autocomplete="off"
+                    spellcheck="off"
+                    data-source="countries"
+                    data-template="tipCountry"/>
+                    <div class="input-group-addon search-input-submit">
+                        <div class="fa fa-search"></div>
+                    </div>
+                </div>
+            </div>
+        </form>
 
-        <a style="margin-left:20px;" href="/manageIndicator">Gestion des indices <i class="fa fa-circle-o-notch fa-spin"></i></a>
-        <br>
-        <a style="margin-left:20px;" href="/manageCountries">Gestion des pays</a>
+        <form class="form-inline search">
+            <label for="search-country">
+                <i class="fa fa-line-chart"></i> Choisissez parmi les indices:
+            </label>
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text"
+                    class="form-control typeahead"
+                    name="search-country"
+                    title="Indiquez l'indice que vous voulez rechercher.."
+                    placeholder="Un indice"
+                    autocomplete="off"
+                    spellcheck="off"
+                    data-source="autoCompleteIndicator"/>
+                    <div class="input-group-addon search-input-submit">
+                        <div class="fa fa-search"></div>
+                    </div>
+                </div>
+            </div>
+        </form>
 
-        {{> showIndicator }}
-    </div>
-    <div id="container-right" class="container-column col-lg-2 col-md-2">
-        <h3><i class="fa fa-globe"></i> Économies</h3>
-        <div class="search">
-            <input class="form-control typeahead"
-            type="text"
-            name="search-country"
-            title="Indiquez l'économie que vous voulez rechercher.."
-            placeholder="Une économie"
-            autocomplete="off"
-            spellcheck="off"
-            data-source="countries"
-            data-template="tipCountry"/>
-            <div class="fa fa-search fa-2x search-input-submit"></div>
-        </div>
+        <p style="margin-left:12px; width:80%;">
+            Vous pouvez aussi choisir un indice grâce aux catégories:
+        </p>
 
-        <!--
-        <div>
-        <ul>
-        {{#each countries}}
-        {{> homeCountry }}
+<div id="categories-list">
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        {{#each categories}}
+        {{> homeCategory}}
         {{/each}}
-    </ul>
+    </div>
+</div>
+</div>
+
+<div id="container-middle" class="col-lg-10 col-md-10">
+    <div id="container-header-date" class="container-header">
+        <i class="fa fa-calendar"></i>
+        <span>Date de début: </span><input type="year" class="year-picker" />
+        <span>Date de fin: </span><input type="year" class="year-picker" />
+    </div>
+    <div id="container-header-indicator" class="container-header">
+        <i class="fa fa-line-chart"></i>
+        <span>Indice(s) séléctionnés: </span>
+    </div>
+    <div id="container-header-economie" class="container-header">
+        <i class="fa fa-globe"></i>
+        <span>Économie(s) séléctionnées: </span>
+    </div>
+
+    <a style="margin-left:20px;" href="/manageIndicator">Gestion des indices <i class="fa fa-circle-o-notch fa-spin"></i></a>
+    <br>
+    <a style="margin-left:20px;" href="/manageCountries">Gestion des pays</a>
+
+    {{> showIndicator }}
+</div>
+<!--
+<div id="container-right" class="container-column col-lg-2 col-md-2">
+
+<div>
+<ul>
+{{#each countries}}
+{{> homeCountry }}
+{{/each}}
+</ul>
+</div>
 </div>
 -->
-</div>
 </template>
 <template name="homeCategory">
     <div class="panel panel-default category">

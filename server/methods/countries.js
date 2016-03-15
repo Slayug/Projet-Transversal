@@ -28,6 +28,7 @@ function parseJsonCountries(jsonFR, jsonEN){
         for(var inKey in jsonFR[key]){
 	        var _id_country = jsonFR[key][inKey]["id"];
             var _code = jsonFR[key][inKey]["iso2Code"];
+			//value necessary for autocomplete
 			var _value = jsonFR[key][inKey]["name"];
             var _name_fr = jsonFR[key][inKey]["name"];
             var _name_en = jsonEN[key][inKey]["name"];

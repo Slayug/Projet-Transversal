@@ -1,7 +1,5 @@
 Template.home.rendered = function() {
 	//inject typeahead
-	//maybe put this in startup but not working..
-	//solution ?
 	Meteor.typeahead.inject();
 };
 Template.home.helpers({
@@ -22,9 +20,18 @@ Template.homeCategory.helpers({
 		return Indicators.find( { id_category: { $in: [idCategory]} } );
 	}
 });
-
+Template.homeIndicator.helpers({
+	isSelected: function(){
+		var indices = Session.get( "indices" );
+		if(indices.indexOf(this.code) > -1){
+			return true;
+		}else{
+			return false;
+		}
+	}
+});
 Template.homeIndicator.events({
-	"click .checkIndicator": function( ){
+	"click .checkIndicator": function( event, template ){
 		//Get the indices. It's an array
 		var indices = Session.get( "indices" );
 		//If the indice is already checked

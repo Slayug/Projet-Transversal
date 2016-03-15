@@ -32,7 +32,7 @@
 </template>
 <template name="importCountry">
     <tr>
-		<td><img src="/images/flags/16/{{name_en}}.png" /></td>
+		<td><img src="/images/flags/16/{{name_en}}.png" onerror="this.style.display='none'"/></td>
         <td>{{name_fr}}</td>
         <td>{{name_en}}</td>
         <td>{{id}}</td>

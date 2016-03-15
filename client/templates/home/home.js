@@ -21,6 +21,8 @@ Template.homeCategory.helpers({
 	}
 });
 Template.homeIndicator.helpers({
+	//return if the indice
+	//was selected by user on list
 	isSelected: function(){
 		var indices = Session.get( "indices" );
 		if(indices.indexOf(this.code) > -1){

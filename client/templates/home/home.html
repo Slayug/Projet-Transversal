@@ -1,22 +1,22 @@
 <template name="home">
     <div id="container-left" class="container-column col-lg-2 col-md-2">
 
-        <form class="form-inline search">
-            <label for="search-country">
+        <form class="form-inline search search-country">
+            <label for="input-country">
                 <i class="fa fa-globe"></i> Indiquer une économie:
             </label>
             <div class="form-group">
                 <div class="input-group">
                     <input type="text"
                     class="form-control typeahead"
-                    name="search-country"
+                    name="text"
                     title="Indiquez l'économie que vous voulez rechercher.."
                     placeholder="Une économie"
                     autocomplete="off"
                     spellcheck="off"
                     data-source="countries"
-                    data-template="tipCountry"/>
-                    <div class="input-group-addon search-input-submit">
+                    data-template="tipCountry" />
+                    <div class="input-group-addon search-submit submit-country">
                         <div class="fa fa-search"></div>
                     </div>
                 </div>
@@ -25,31 +25,27 @@
 
         <hr>
 
-        <form class="form-inline search">
-            <label for="search-country">
-                <i class="fa fa-line-chart"></i> Rechercher directement un indice:
+        <form class="form-inline search search-indicator">
+            <label for="input-indicator">
+                <i class="fa fa-line-chart"></i> Rechercher un indice:
             </label>
             <div class="form-group">
                 <div class="input-group">
                     <input type="text"
                     class="form-control typeahead"
-                    name="search-country"
+                    name="input-indicator"
                     title="Indiquez l'indice que vous voulez rechercher.."
                     placeholder="Un indice"
                     autocomplete="off"
                     spellcheck="off"
                     data-source="autoCompleteIndicator"/>
-                    <div class="input-group-addon search-input-submit">
+                    <div class="input-group-addon search-submit submit-indicator">
                         <div class="fa fa-search"></div>
                     </div>
                 </div>
             </div>
         </form>
 
-        <p style="width:100%;text-align:center;">
-            <span style="font-weight:bold;">OU</span>
-            <span style="width:100%;text-align:center;">par catégories:</span>
-        </p>
 
         <div id="categories-list">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -67,13 +63,21 @@
             <span>Date de début: </span><input type="year" class="year-picker" />
             <span>Date de fin: </span><input type="year" class="year-picker" />
         </div>
-        <div id="container-header-indicator" class="container-header">
-            <i class="fa fa-line-chart"></i>
-            <span>Indice(s) séléctionnés: </span>
-        </div>
         <div id="container-header-economie" class="container-header">
             <i class="fa fa-globe"></i>
             <span>Économie(s) séléctionnées: </span>
+            <div class="selection">
+                {{#each countriesSelected}}
+                {{> countrySelected}}
+                {{/each}}
+            </div>
+        </div>
+        <div id="container-header-indicator" class="container-header">
+            <i class="fa fa-line-chart"></i>
+            <span>Indice(s) séléctionnés: </span>
+            {{#each indicatorsSelected}}
+            {{> indicatorSelected}}
+            {{/each}}
         </div>
 
         <a style="margin-left:20px;" href="/manageIndicator">Gestion des indices <i class="fa fa-circle-o-notch fa-spin"></i></a>
@@ -98,14 +102,16 @@
 <template name="homeCategory">
     <div class="panel panel-default category">
         <div class="panel-heading" role="tab" id="heading{{_id}}">
-            <h4 class="panel-title"><a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{_id}}" aria-expanded="false" aria-controls="collapse{{_id}}">
+            <h4 class="panel-title"><a class="collapsed" role="button"
+                data-toggle="collapse" data-parent="#accordion"
+                href="#collapse{{_id}}" aria-expanded="false" aria-controls="collapse{{_id}}">
                 {{name}} ></a>
             </h4>
         </div>
         <div id="collapse{{_id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{_id}}">
             <div class="panel-body">
                 <ul>
-                    {{#each indicesOf _id}}
+                    {{#each indicatorOf _id}}
                     {{> homeIndicator}}
                     {{/each}}
                 </ul>
@@ -122,5 +128,14 @@
     </li>
 </template>
 <template name="tipCountry">
-    <span><img src="/images/flags/16/{{name_en}}.png" onerror="this.style.display='none'" alt="{{name_fr}}" /> - {{name_fr}}</span>
+    <div class="country-selectable">
+        <img src="/images/flags/16/{{name_en}}.png"
+        onerror="this.style.display='none'"
+        alt="{{name_fr}}" /> - {{name_fr}}</div>
+</template>
+<template name="countrySelected">
+    <span class="country-selection">{{ name_fr }} <span class="checkCountry">&times;</span></span>
+</template>
+<template name="indicatorSelected">
+    <span class="indication-selection">{{ name }} <span class="checkIndicator">&times;</span></span>
 </template>

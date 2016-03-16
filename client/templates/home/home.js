@@ -1,3 +1,4 @@
+Session.setDefault("indicators", []);
 Template.home.rendered = function() {
 	//inject typeahead
 	Meteor.typeahead.inject();
@@ -13,10 +14,18 @@ Template.home.helpers({
 		return Indicators.find().fetch().map(function(it){
 			return it.name;
 		});
+	},
+	countriesSelected: function(){
+		var countries = Session.get( "countries" );
+		console.log("selected");
+	},
+	indicatorsSelected: function(){
+		var indicators = Session.get( "indicators" );
+		return Indicators.find({ code: { $in: indicators } } );
 	}
 });
 Template.homeCategory.helpers({
-	indicesOf: function(idCategory){
+	indicatorOf: function(idCategory){
 		return Indicators.find( { id_category: { $in: [idCategory]} } );
 	}
 });
@@ -24,31 +33,32 @@ Template.homeIndicator.helpers({
 	//return if the indice
 	//was selected by user on list
 	isSelected: function(){
-		var indices = Session.get( "indices" );
-		if(indices.indexOf(this.code) > -1){
+		var indicators = Session.get( "indicators" );
+		if(indicators.indexOf(this.code) > -1){
 			return true;
 		}else{
 			return false;
 		}
 	}
 });
-Template.homeIndicator.events({
+Template.home.events({
 	"click .checkIndicator": function( event, template ){
-		//Get the indices. It's an array
-		var indices = Session.get( "indices" );
+		//Get the indicators. It's an array
+		var indicators = Session.get( "indicators" );
 		//If the indice is already checked
-		if( indices.includes( this.code ) ){
-			//Remove the indice from the indices
-			indices.splice( indices.indexOf( this.code ), 1 );
+		if( indicators.includes( this.code ) ){
+			//Remove the indice from the indicators
+			indicators.splice( indicators.indexOf( this.code ), 1 );
 			//Update the session
-			Session.set( "indices", indices );
+			Session.set( "indicators", indicators );
 		}
 		//If the indice have been just checked
 		else{
-			//Add the indice to the indices
-			indices.push( this.code );
+			//Add the indice to the indicators
+			indicators.push( this.code );
 			//Update the session
-			Session.set( "indices", indices );
+			Session.set( "indicators", indicators );
+			//Session.set( "indicators", - Session.get( "indicators", ))
 		}
 	},
 	"click .checkCountry": function( ){
@@ -63,15 +73,30 @@ Template.homeIndicator.events({
 		}
 		//If the country have been just checked
 		else{
-			//Add the country to the indices
+			//Add the country to the indicators
 			countries.push( { name: this.name, code: this.code } );
 			//Update the session
 			Session.set( "countries", countries );
 		}
+	},
+
+	"click .country-selectable": function(){
+		console.log("toto");
+		console.log(event.target.text);
+	},
+	"click .submit-country": function(){
+		console.log("submit");
+	}
+});
+Template.body.events({
+	"submit .search-country": function(){
+		console.log("CICIICIC");
+
+		var text = event.target.text.value;
 	}
 });
 
-Template.homeCountry.events({
+Template.home.events({
 	"click .checkCountry": function( ){
 		//Get the countries. It's an array
 		var countries = Session.get( "countries" );
@@ -94,7 +119,7 @@ Template.homeCountry.events({
 		}
 		//If the country have been just checked
 		else{
-			//Add the country to the indices
+			//Add the country to the indicators
 			countries.push( { name: this.name, code: this.code } );
 			//Update the session
 			Session.set( "countries", countries );

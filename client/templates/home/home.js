@@ -1,46 +1,13 @@
-Session.setDefault("indicators", []);
-Template.home.rendered = function() {
-	//inject typeahead
-	Meteor.typeahead.inject();
-};
 Template.home.helpers({
-	categories: function(){
-		return Categories.find().fetch();
-	},
-	countries: function(){
-		return Countries.find().fetch();
-	},
-	autoCompleteIndicator: function(){
-		return Indicators.find().fetch().map(function(it){
-			return it.name;
-		});
-	},
 	countriesSelected: function(){
-		var countries = Session.get( "countries" );
-		console.log("selected");
+		return Session.get( "countries" );
 	},
 	indicatorsSelected: function(){
 		var indicators = Session.get( "indicators" );
 		return Indicators.find({ code: { $in: indicators } } );
 	}
 });
-Template.homeCategory.helpers({
-	indicatorOf: function(idCategory){
-		return Indicators.find( { id_category: { $in: [idCategory]} } );
-	}
-});
-Template.homeIndicator.helpers({
-	//return if the indice
-	//was selected by user on list
-	isSelected: function(){
-		var indicators = Session.get( "indicators" );
-		if(indicators.indexOf(this.code) > -1){
-			return true;
-		}else{
-			return false;
-		}
-	}
-});
+
 Template.home.events({
 	"click .checkIndicator": function( event, template ){
 		//Get the indicators. It's an array
@@ -79,24 +46,12 @@ Template.home.events({
 			Session.set( "countries", countries );
 		}
 	},
-
 	"click .country-selectable": function(){
-		console.log("toto");
-		console.log(event.target.text);
 	},
 	"click .submit-country": function(){
 		console.log("submit");
-	}
-});
-Template.body.events({
-	"submit .search-country": function(){
-		console.log("CICIICIC");
-
-		var text = event.target.text.value;
-	}
-});
-
-Template.home.events({
+		console.log($("#input-country").val());
+	},
 	"click .checkCountry": function( ){
 		//Get the countries. It's an array
 		var countries = Session.get( "countries" );

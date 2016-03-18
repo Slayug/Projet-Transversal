@@ -1,4 +1,4 @@
-Session.setDefault("indicators", []);
+
 Template.leftColumn.rendered = function() {
 	//inject typeahead
 	Meteor.typeahead.inject();
@@ -37,8 +37,32 @@ Template.leftColumn.helpers({
 Template.leftColumn.events({
 	'keyup .search-country': function( event ){
 		if(event.keyCode == 13){
-			console.log($(".country-selectable").text);
-			console.log(this);
+			var countryName = $("#input-country").val();
+			var country = Countries.find( { name_fr: { $in: [countryName] }} ).fetch()[0];
+			if(country === undefined){
+				return;
+			}
+			//Get the countries. It's an array
+			var countries = Session.get( "countries" );
+
+			//Determine if the country is already checked
+			//Is so, index check equal the index country in countries
+			var indexCheck = -1;
+			for( var i = 0; i < countries.length; ++i ){
+				if( countries[ i ].code === country.code ){
+					indexCheck = i;
+					i = countries.length
+				}
+			}
+			//If the country become checked
+			if( indexCheck == -1){
+				//Add the country to the indicators
+				countries.push( { name_fr: country.name_fr, code: country.code,
+									name_en: country.name_en} );
+				//Update the session
+				Session.set( "countries", countries );
+				$('.typeahead').typeahead('close');
+			}
 		}
 	}
 });

@@ -11,11 +11,9 @@
         <div id="container-header-economie" class="container-header">
             <i class="fa fa-globe"></i>
             <span>Économie(s) séléctionnées: </span>
-            <div class="selection">
-                {{#each countriesSelected}}
-                {{> countrySelected}}
-                {{/each}}
-            </div>
+            {{#each countriesSelected}}
+            {{> countrySelected}}
+            {{/each}}
         </div>
         <div id="container-header-indicator" class="container-header">
             <i class="fa fa-line-chart"></i>
@@ -52,8 +50,11 @@
     </li>
 </template>
 <template name="countrySelected">
-    <span class="country-selection">{{ name_fr }} <span class="checkCountry">&times;</span></span>
+    <span class="selection"><img src="/images/flags/16/{{name_en}}.png"
+        onerror="this.style.display='none'"
+        alt="{{name_fr}}" /> {{ name_fr }} <span class="removeCountrySelected">&times;</span>
+    </span>
 </template>
 <template name="indicatorSelected">
-    <span class="indication-selection">{{ name }} <span class="checkIndicator">&times;</span></span>
+    <span class="selection">{{ name }} <span class="checkIndicator">&times;</span></span>
 </template>

@@ -1,17 +1,17 @@
 Session.set( "countries", [ ] );
 //indices: tableaux des codes indices.
-Session.set( "indices", [ ] );
+Session.setDefault("indicators", []);
 
 Template.showIndicator.helpers({
     createChart: function(){
         //Récupére les indices sélectionés
-        var indices = Indicators.find( { code: { $in: Session.get( "indices" ) } } )
+        var indicators = Indicators.find( { code: { $in: Session.get( "indicators" ) } } )
                                .fetch( );
 
         var datas = []
 
         //Parcourt les indices sélectionés
-        indices.forEach( function( indice ) {
+        indicators.forEach( function( indice ) {
             //Sélectionne les valeurs des pays pour l'indice
             var countries = indice.countries;
             console.log(indice);

@@ -13,7 +13,7 @@ Template.homeCategory.helpers({
 Template.homeIndicator.helpers({
     //return if the indice
     //was selected by user on list
-    isSelected: function(){
+    indicatorSelected: function(){
         var indicators = Session.get( "indicators" );
         if(indicators.indexOf(this.code) > -1){
             return true;
@@ -38,8 +38,19 @@ Template.leftColumn.helpers({
         return Session.get( "similarCountries" );
     }
 });
-var addCountryFromSearch = function(){
-    var countryName = $("#input-country").val();
+Template.similarCountry.helpers({
+    countrySelected: function(){
+        var countries = Session.get( "countries" );
+        console.log(this);
+        for(var c = 0; c < countries.length; c++){
+            if(countries[c].name_fr == this.name_fr){
+                return true;
+            }
+        }
+        return false;
+    }
+})
+var addCountryFromName = function( countryName ){
     var country = Countries.find( { name_fr: { $in: [countryName] }} ).fetch()[0];
     if(country === undefined){
         return;
@@ -106,11 +117,14 @@ Template.leftColumn.events({
         //key enter was pressed
         //for selected one country
         if(event.keyCode == 13){
-            addCountryFromSearch();
+            addCountryFromName( $("#input-country").val() );
         }
     },
     'click .submit-country': function( event ){
-        addCountryFromSearch();
+        addCountryFromName( $("#input-country").val() );
+    },
+    'click .checkCountry': function(){
+        addCountryFromName( this.name_fr );
     },
     'keyup .search-indicator': function( event ){
         //key enter was pressed

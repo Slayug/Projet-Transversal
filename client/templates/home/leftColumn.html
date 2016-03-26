@@ -26,10 +26,11 @@
 
         <div id="similar-countries">
             <h4>Économie(s) similaire(s):</h4>
-
-            {{#each similarCountries}}
-            {{> similarCountry}}
-            {{/each}}
+            <ul>
+                {{#each similarCountries}}
+                {{> similarCountry}}
+                {{/each}}
+            </ul>
         </div>
 
         <hr>
@@ -97,8 +98,9 @@
 </template>
 
 <template name="homeIndicator">
-    <li class="checkIndicator {{#if isSelected}}indicator-selected{{/if}}">> {{name}}</li>
+    <li class="checkIndicator {{#if indicatorSelected}}selected{{/if}}">> {{name}}</li>
 </template>
 <template name="similarCountry">
-    {{ name_fr }}
+    <li class="checkCountry {{#if countrySelected}}selected{{/if}}">>
+        <img src="/images/flags/16/{{ name_en }}.png" onerror="this.style.display='none'" alt="{{ name_fr }}"/> {{ name_fr }}</li>
 </template>

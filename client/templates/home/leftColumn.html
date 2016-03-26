@@ -1,62 +1,70 @@
 <template name="leftColumn">
-	<div id="container-left" class="container-column col-lg-2 col-md-2">
+    <div id="container-left" class="container-column col-lg-2 col-md-2">
 
-		<form class="form-inline search search-country">
-			<label for="input-country">
-				<i class="fa fa-globe"></i> Indiquer une économie:
-			</label>
-			<div class="form-group">
-				<div class="input-group">
-					<input type="text"
-					class="form-control typeahead"
-					name="text"
-					title="Indiquez l'économie que vous voulez rechercher.."
-					placeholder="Une économie"
-					id="input-country"
-					autocomplete="off"
-					spellcheck="off"
-					data-source="countries"
-					data-template="tipCountry" />
-					<div type="submit" class="input-group-addon search-submit submit-country">
-						<div class="fa fa-search"></div>
-					</div>
-				</div>
-			</div>
-		</form>
+        <form class="form-inline search search-country">
+            <label for="input-country">
+                <i class="fa fa-globe"></i> Indiquer une économie:
+            </label>
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text"
+                    class="form-control typeahead"
+                    name="text"
+                    title="Indiquez l'économie que vous voulez rechercher.."
+                    placeholder="Une économie"
+                    id="input-country"
+                    autocomplete="off"
+                    spellcheck="off"
+                    data-source="countries"
+                    data-template="tipCountry" />
+                    <div type="submit" class="input-group-addon search-submit submit-country">
+                        <div class="fa fa-search"></div>
+                    </div>
+                </div>
+            </div>
+        </form>
 
-		<hr>
+        <div id="similar-countries">
+            <h4>Économie(s) similaire(s):</h4>
 
-		<form class="form-inline search search-indicator">
-			<label for="input-indicator">
-				<i class="fa fa-line-chart"></i> Rechercher un indice:
-			</label>
-			<div class="form-group">
-				<div class="input-group">
-					<input type="text"
-					class="form-control typeahead"
-					id="input-indicator"
-					title="Indiquez l'indice que vous voulez rechercher.."
-					placeholder="Un indice"
-					autocomplete="off"
-					spellcheck="off"
-					data-source="autoCompleteIndicator"/>
-					<div class="input-group-addon search-submit submit-indicator">
-						<div class="fa fa-search"></div>
-					</div>
-				</div>
-			</div>
-		</form>
+            {{#each similarCountries}}
+            {{> similarCountry}}
+            {{/each}}
+        </div>
+
+        <hr>
+
+        <form class="form-inline search search-indicator">
+            <label for="input-indicator">
+                <i class="fa fa-line-chart"></i> Rechercher un indice:
+            </label>
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text"
+                    class="form-control typeahead"
+                    id="input-indicator"
+                    title="Indiquez l'indice que vous voulez rechercher.."
+                    placeholder="Un indice"
+                    autocomplete="off"
+                    spellcheck="off"
+                    data-source="autoCompleteIndicator"/>
+                    <div class="input-group-addon search-submit submit-indicator">
+                        <div class="fa fa-search"></div>
+                    </div>
+                </div>
+            </div>
+        </form>
 
 
-		<div id="categories-list">
-			<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-				{{#each categories}}
-				{{> homeCategory}}
-				{{/each}}
-			</div>
-		</div>
-		<hr>
-	</div>
+        <div id="categories-list">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                {{#each categories}}
+                {{> homeCategory}}
+                {{/each}}
+            </div>
+        </div>
+        <hr>
+    </div>
 </template>
 
 <template name="homeCategory">
@@ -90,4 +98,7 @@
 
 <template name="homeIndicator">
     <li class="checkIndicator {{#if isSelected}}indicator-selected{{/if}}">> {{name}}</li>
+</template>
+<template name="similarCountry">
+    {{ name_fr }}
 </template>

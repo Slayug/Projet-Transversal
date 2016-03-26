@@ -47,16 +47,5 @@ Template.home.events({
 			Session.set( "indicators", indicators );
 			//Session.set( "indicators", - Session.get( "indicators", ))
 		}
-	},
-	"click .country-selectable": function(){
-	},
-	"click .submit-country": function(){
-		console.log("submit");
-		console.log($("#input-country").val());
-		//TODO ajouter à la session list des pays séléctionnés
-	},
-	"click .checkCountry": function( ){
-		//replaced by keyup search-country in leftColumn
-		//console.log( countries );
 	}
 });

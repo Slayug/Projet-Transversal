@@ -10,6 +10,9 @@ Template.showIndicator.helpers({
 
         var datas = []
 
+        //on check d'abord si un des indices est en %
+        //si c'est le cas, on convertit
+
         //Parcourt les indices sélectionés
         indicators.forEach( function( indice ) {
             //Sélectionne les valeurs des pays pour l'indice
@@ -32,7 +35,7 @@ Template.showIndicator.helpers({
 
                 //Ajoute les donnée dans datas
                 datas.push( {
-                    name: country.name,
+                    name: "[" + country.name_fr + "]<br>" + indice.name,
                     data: dataCountry
                 } );
             });

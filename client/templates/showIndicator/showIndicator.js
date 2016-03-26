@@ -51,8 +51,13 @@ Template.showIndicator.helpers({
                 yAxis: {
                     //Title of the y Axis
                     title:{
-                        text: 'yTest'
+                        text: 'Value'
                     }
+                },
+                xAxis: {
+                        title:{
+                            text: 'Année'
+                        }
                 },
                 //Set the layout and the legend of the chart
                 legend: {

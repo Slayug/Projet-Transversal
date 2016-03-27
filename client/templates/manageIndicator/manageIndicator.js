@@ -38,7 +38,10 @@ Template.manageIndicator.events({
 	},
 	"click .toast":function(){
 		Meteor.call('testIndicator');
-	}
+	},
+    "click .functionClassement":function(){
+        Meteor.call('importFunctions');
+    }
 });
 
 Template.indicator.events({

@@ -8,6 +8,9 @@ Template.indicator.helpers({
 	categories:function(){
 		return Categories.find();
 	},
+    functionsClassement: function( ){
+        return FunctionClassement.find( );
+    },
 	equals: function(a, b){
 		return a === b;
 	}
@@ -16,6 +19,11 @@ Template.category.helpers({
 	equals: function(a, b){
 		return a === b;
 	}
+});
+Template.functionClassement.helpers({
+    equals: function( a, b ){
+        return a === b;
+    }
 });
 Template.manageIndicator.events({
 	"submit .add-indicator": function(event){
@@ -53,5 +61,11 @@ Template.indicator.events({
 		Indicators.update(this._id, {
 			$set: {id_category: idCategory}
 		});
-	}
+	},
+    'change .select-functionClassement': function( e ){
+        var idFunction = $(event.target).find( 'option:selected' ).val( );
+        FunctionClassement.update( this._id, {
+            $set: {id_function: idFunction }
+        });
+    }
 })

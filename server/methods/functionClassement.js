@@ -1,7 +1,7 @@
 Meteor.methods({
     "importFunctions": function( ){
-        var nbFunctions = FunctionClassement.count( );
-        if( nbFunctions == 0 ){
+        var nbFunctions = FunctionClassement.find().fetch();
+        if( nbFunctions.length == 0 ){
             FunctionClassement.insert({
                 id: 0,
                 name: "procheDeN",

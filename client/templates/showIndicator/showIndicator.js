@@ -69,6 +69,13 @@ Template.showIndicator.helpers({
                     ]
                 },
 
+                plotOptions: {
+                    series: {
+                        pointInterval: 1,
+                        pointIntervalUnit: 'year'
+                    }
+                },
+
                 series : datas
             });
         });

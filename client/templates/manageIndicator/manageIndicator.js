@@ -49,7 +49,10 @@ Template.manageIndicator.events({
 	},
     "click .functionClassement":function(){
         Meteor.call('importFunctions');
-    }
+    },
+    'click .calculateSimilarity': function(){
+            Meteor.call( 'calculateSimilarity' );
+    },
 });
 
 Template.indicator.events({

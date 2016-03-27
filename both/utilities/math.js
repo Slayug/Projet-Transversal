@@ -28,7 +28,7 @@ covariance = function( point ){
     for (var p = 0; p < point.length; p++) {
         cov += (x[p] - moyenne(x)) * (y[p] - moyenne(y));
     }
-    return arrondi(cov / point.length, 2);
+    return arrondi(cov / point.length, 6);
 }
 /**
 * @param a
@@ -51,7 +51,7 @@ moyenne = function( list ) {
     for (var i = 0; i < list.length; i++) {
         sigma += list[i];
     }
-    return arrondi(sigma / list.length, 2);
+    return arrondi(sigma / list.length, 6);
 }
 /**
 *
@@ -66,7 +66,7 @@ ecartType = function( list ) {
     for (var i = 0; i < list.length; i++) {
         sigma += Math.pow(list[i], 2);
     }
-    return arrondi(Math.sqrt(sigma / list.length - Math.pow(moyenne( list ), 2)), 2);
+    return arrondi(Math.sqrt(sigma / list.length - Math.pow(moyenne( list ), 2)), 6);
 }
 /**
 *   @param list
@@ -87,9 +87,9 @@ moindresCarrees = function( list ){
     //on crée la liste des points en x et y
     for(var x = 0; x < list.length; x++){
         listX.push( list[x].getX() );
-        listY.push( list[y].getY() );
+        listY.push( list[x].getY() );
     }
-    var a = covariance( list ) / variance( listX );
-    var b = moyenne( listY ) - a * moyenne( listX );
+    var a = arrondi( covariance( list ) / variance( listX ), 6 );
+    var b = arrondi( moyenne( listY ) - a * moyenne( listX ), 6);
     return new Equation(a, b);
 }

@@ -21,6 +21,29 @@ var apiCall = function (apiUrl, callback) {
 	}
 }
 /**
+*   retourne vrai si la list
+*   contient un element plus grand
+*   la liste est contient des CountryDistance
+**/
+function hasBiggerElement( list, elem){
+    for(var l = 0; l < list.length; l++){
+        if( list[l].distance > elem){
+            return true;
+        }
+    }
+    if(list.length == 0){
+        return true;
+    }
+    return false;
+}
+/**
+*   represent a distance with a country
+**/
+var CountryDistance = function( codeCountry, distance ){
+    this.code = codeCountry;
+    this.distance = distance;
+}
+/**
 * parse and insert every country founded
 **/
 function parseJsonCountries(jsonFR, jsonEN){
@@ -75,7 +98,91 @@ Meteor.methods({
 		var jsonEN = Meteor.wrapAsync(apiCall)(urlEN);
 
 		parseJsonCountries(jsonFR, jsonEN);
-	}
+	},
+    /**
+    *   calculate all similiraty for each
+    *   countries, for each indicators
+    *   countries and indicators must be implemented
+    **/
+    'calculateSimilarity': function(){
+        //load indicators
+        var indicators = Indicators.find().fetch();
+        //load countries
+        var countries = Countries.find();
 
+        //seulement si on a un seul indice
+        //et un seul pays
+        for(var i = 0; i < 4; i++){
+            //selection de l'indice concerné
+            //moindresCarrees pour les pays selectionnés
+            //l'indice sera le code du pays
+            var indicator = indicators[i];
+            var listMoindresCarrees = [];
+            console.log("============> "+i+"/"+indicators.length);
+            console.log("============> "+indicators[i].code);
+            for(var countryCode in indicator.countries){
+                if(indicator.countries[ countryCode ].similarities != undefined){
+                    if(indicator.countries[ countryCode ].similarities.length > 0){
+                        //continue;
+                    }
+                }
+                var countryYears = indicator.countries[ countryCode ].years;
+                var pointsByCountry = [];
+                //on parcours les années pour determiner l'ensemble
+                //de point qui servira aux moindres carrees
+                for( var year in countryYears ){
+                    //x: year
+                    //y: value pour l'année
+                    pointsByCountry.push( new Point( parseInt( year ), arrondi( countryYears[ year ], 6 ) ) );
+                }
+                if(pointsByCountry.length > 1){
+                    listMoindresCarrees[countryCode] = moindresCarrees( pointsByCountry );
+                }
+            }
+            //on calcul la distance euclidienne entre chaque pays
+            //et si un pays a une distance plus petit on l'ajoute
+            for(var firstCountryCode in indicator.countries){
+                var similarList = [];
+                var countryYears = indicator.countries[ firstCountryCode ].years;
+                var firstCarrees = listMoindresCarrees[ firstCountryCode ];
+                for(var secondCountryCode in indicator.countries){
+                    //pour chaque année
+                    //pour ensuite faire la moyenne
+                    var secondCarrees = listMoindresCarrees[ secondCountryCode ];
+                    var distanceByYear = [];
+                    for( var year in countryYears ){
+                        if(secondCarrees != undefined &&
+                            firstCarrees != undefined){
+                            distanceByYear.push(
+                            distanceEuclidienne( new Point(year, firstCarrees.a * parseInt( year ) + firstCarrees.b),
+                                                new Point(year, secondCarrees.a * parseInt( year ) + secondCarrees.b ) ) );
+                        }
+                    }
+                    var otherDistance = moyenne( distanceByYear );
+                    //si la nouvelle distance est plus petite
+                    if( hasBiggerElement( similarList, otherDistance ) ){
+                        similarList.push( new CountryDistance( secondCountryCode, otherDistance ) );
+                        //si la liste a plus de 5 element on enlève le plus grand
+                        if(similarList.length > 5){
+                            var indexOfBigger = 0;
+                            for(var b = 1; b < similarList.length; b++){
+                                if(similarList[b].distance > similarList[indexOfBigger].distance){
+                                    indexOfBigger = b;
+                                }
+                            }
+                            similarList.splice(indexOfBigger, 1);
+                        }
+                    }
+                }
+                indicator.countries[ firstCountryCode ].similarities = similarList;
+                //on save en bd les 5 pays les plus cohérents
+                Indicators.update(indicator._id, {
+                    $set: {countries: indicator.countries }
+                });
+                //console.log('update similarities for '+indicator.code+' '+indicator.countries[ firstCountryCode ].name);
+            }
 
+        }
+
+    }
 });

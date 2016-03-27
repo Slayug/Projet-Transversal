@@ -10,9 +10,6 @@ Template.showIndicator.helpers({
 
         var datas = []
 
-        //on check d'abord si un des indices est en %
-        //si c'est le cas, on convertit
-
         //Parcourt les indices sélectionés
         indicators.forEach( function( indice ) {
             //Sélectionne les valeurs des pays pour l'indice
@@ -29,8 +26,9 @@ Template.showIndicator.helpers({
                 var dataCountry = [];
                 for( var year in countryYears ){
                     var year = parseInt( year );
+                    var timestamp = Date.UTC( year, 0, 1 );
                     var value = parseFloat( countryYears[ year ] );
-                    dataCountry.push( new Array( year, value ) );
+                    dataCountry.push( new Array( timestamp, value ) );
                 }
 
                 //Ajoute les donnée dans datas
@@ -43,33 +41,35 @@ Template.showIndicator.helpers({
 
         //When everything else is finished, draw the graph
         Meteor.defer( function( ){
-            //Call the Highcharts functions
-            Highcharts.chart( 'chart', {
-                //Title of the chart
-                title: {
-                    text: 'The Test'
+            $('#chart').highcharts('StockChart', {
+
+                rangeSelector : {
+                    inputDateFormat: "%Y",
+                    inputEditDateFormat: "%Y",
+                    buttons: [
+                        {
+                            type: 'year',
+                            count: 1,
+                            text: '1a' 
+                        },
+                        {
+                            type: 'year',
+                            count: 5,
+                            text: '5a'
+                        },
+                        {
+                            type: 'year',
+                            count: 10,
+                            text: '10a'
+                        },
+                        {
+                            type: 'all',
+                            text: 'Tout'
+                        },
+                    ]
                 },
-                //Set the y Axis
-                yAxis: {
-                    //Title of the y Axis
-                    title:{
-                        text: 'Value'
-                    }
-                },
-                xAxis: {
-                        title:{
-                            text: 'Année'
-                        }
-                },
-                //Set the layout and the legend of the chart
-                legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    verticalAlign: 'middle',
-                    borderWidth: 0
-                },
-                //Datas
-                series: datas
+
+                series : datas
             });
         });
     }

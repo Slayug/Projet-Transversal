@@ -99,6 +99,8 @@ var addIndicatorFromSearch = function(){
         //Update the session
         Session.set( "indicators", indicators );
         $('.typeahead').typeahead('close');
+
+        calculateSimilarCountries( );
     }
 }
 /**
@@ -107,10 +109,38 @@ var addIndicatorFromSearch = function(){
 *
 **/
 var calculateSimilarCountries = function( ){
-    var countries = Session.get( "similarCountries" );
-    //TODO calcule similar
-    countries.push( { name_fr: "France" } );
-    Session.set( "similarCountries", countries );
+    var similarCountries = Session.get( "similarCountries" );
+    var countriesSelected = Session.get( "countries" );
+    var indicatorsSelected = Session.get( "indicators" );
+    //seulement si on a un seul indice
+    if( indicatorsSelected.length == 1){
+        //selection de l'indice concerné
+        var indicator = Indicators.find( { code: { $in: [indicatorsSelected[0] ] }} ).fetch()[0];
+        //moindresCarrees pour les pays selectionnés
+        //l'indice sera le code du pays
+        console.log(indicator);
+        var listMoindresCarrees = [];
+        for(var country in indicator.countries){
+            var countryYears = country.years;
+
+            var pointsByCountry = [];
+            //on parcours les années pour determiner l'ensemble
+            //de point qui servira aux moindres carrees
+            for( var year in countryYears ){
+                //x: year
+                //y: value pour l'année
+                pointsByCountry.push( new Point( year, countryYears[ year ] ) );
+            }
+            listMoindresCarrees.push( moindresCarrees( pointsByCountry ) );
+        }
+        for(var p = 0; p < moindresCarrees.length; p++){
+            console.log("==> " +moindresCarrees[p]);
+        }
+
+
+
+        Session.set( "similarCountries", similarCountries );
+    }
 }
 Template.leftColumn.events({
     'keyup .search-country': function( event ){

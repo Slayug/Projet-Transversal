@@ -21,11 +21,11 @@ covariance = function( point ){
     var y = [];
 
     for (var p = 0; p < point.length; p++) {
-        x[i] = point[p].getX();
-        y[i] = point[p].getY();
+        x.push( point[p].getX() );
+        y.push( point[p].getY() );
     }
 
-    for (var p = 0; p < point.length; i++) {
+    for (var p = 0; p < point.length; p++) {
         cov += (x[p] - moyenne(x)) * (y[p] - moyenne(y));
     }
     return arrondi(cov / point.length, 2);
@@ -77,6 +77,7 @@ variance = function( list ){
 }
 /**
 *   retourne une Equation
+*   typeof Equation
 *   @param list
 *   list de points
 */

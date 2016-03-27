@@ -8,13 +8,7 @@ zimme:iron-router-active
 cmather:handlebars-server@0.2.0
 dburles:collection-helpers
 reywood:publish-composite
-momentjs:moment
-underscorestring:underscore.string
-matb33:collection-hooks
-iron:router@1.0.0
-yasinuslu:blaze-meta
 aldeed:collection2
-aldeed:autoform
 cfs:standard-packages
 cfs:filesystem
 dsyko:meteor-node-csv
@@ -37,9 +31,10 @@ ejson
 spacebars
 check
 http
-highcharts:highcharts-meteor
 
 
 highcharts-container
 sergeyt:typeahead
 jhuenges:highstock
+matb33:collection-hooks
+iron:router

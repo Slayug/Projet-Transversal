@@ -78,6 +78,9 @@ SL.UEM.LTRM.FE.ZS</textarea>
                     <option value="" selected="selected">
                     </option>
                 {{/if}}
+                {{#each functionsClassement}}
+                {{> functionClassement}}
+                {{/each}}
             </select>
         </td>
 		<td>
@@ -92,7 +95,7 @@ SL.UEM.LTRM.FE.ZS</textarea>
 	</option>
 </template>
 <template name="functionClassement">
-    <option value="{{_id}}"
-            selected"{{#if equals _id ../id_functionClassement}}selected{{/if}}">
+    <option value="{{_id}}" selected="{{#if equals _id ../id_functionClassement}}selected{{/if}}">
+    {{name}}
     </option>
 </template>

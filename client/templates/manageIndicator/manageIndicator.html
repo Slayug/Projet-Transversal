@@ -4,6 +4,7 @@
 			<div class="row">
 				<button type="button" class="toast">TOAST</button>
 				<button class="cat" name="cat">importe categories</button>
+                <button class="functionClassement">importe functions</button>
 				<h2>Importer un indice:</h2>
 				<p>
 					Comment savoir quel lien mettre ?<br />
@@ -11,7 +12,6 @@
 					vous repérez qu'il y'a une sorte d'ID: <strong>SE.ENR.PRSC.FM.ZS</strong>. Vous copiez cet élément
 					et paf vous le collez. Plus qu'à faire <strong>OK</strong><br>
 					Si plusieurs juste sauter une ligne entre chaque..
-
 				</p>
 				<form class="add-indicator">
 					<textarea  rows="11" cols="80" type="text" name="text">SE.XPD.TOTL.GB.ZS
@@ -41,6 +41,7 @@ SL.UEM.LTRM.FE.ZS</textarea>
 						<th>Indicator</th>
 						<th>Code</th>
 						<th>Catégorie</th>
+                        <th>FonctionClassement</th>
 						<th>Supprimer</th>
 					</thead>
 					<tbody>
@@ -71,6 +72,14 @@ SL.UEM.LTRM.FE.ZS</textarea>
 				{{/each}}
 			</select>
 		</td>
+        <td>
+            <select class="select-function" id="functionClassement-for-{{_id}}">
+				{{#if equals id_functionClassement undefined}}
+                    <option value="" selected="selected">
+                    </option>
+                {{/if}}
+            </select>
+        </td>
 		<td>
             <button class="delete">&times;</button>
 		</td>
@@ -81,4 +90,9 @@ SL.UEM.LTRM.FE.ZS</textarea>
 		selected="{{#if equals _id ../id_category}}selected{{/if}}">
 	{{name}}
 	</option>
+</template>
+<template name="functionClassement">
+    <option value="{{_id}}"
+            selected"{{#if equals _id ../id_functionClassement}}selected{{/if}}">
+    </option>
 </template>

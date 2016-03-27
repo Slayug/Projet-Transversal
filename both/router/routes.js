@@ -15,6 +15,7 @@ Router.route('/manageIndicator', {
     controller: 'ManageIndicatorController',
     waitOn:function(){
         Meteor.subscribe('indicators');
+        Meteor.subscribe( 'functionClassement' );
         return [];
     },
     subscriptions:function(){

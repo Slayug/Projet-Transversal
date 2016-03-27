@@ -133,8 +133,8 @@ var calculateSimilarCountries = function( ){
             }
             listMoindresCarrees.push( moindresCarrees( pointsByCountry ) );
         }
-        for(var p = 0; p < moindresCarrees.length; p++){
-            console.log("==> " +moindresCarrees[p]);
+        for(var p = 0; p < listMoindresCarrees.length; p++){
+            console.log("==> " +listMoindresCarrees[p].a+" "+listMoindresCarrees[p].b);
         }
 
 

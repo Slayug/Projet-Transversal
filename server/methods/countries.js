@@ -112,13 +112,14 @@ Meteor.methods({
 
         //seulement si on a un seul indice
         //et un seul pays
-        for(var i = 0; i < 4; i++){
+        for(var i = 0; i < indicators.length; i++){
             //selection de l'indice concerné
             //moindresCarrees pour les pays selectionnés
             //l'indice sera le code du pays
             var indicator = indicators[i];
             var listMoindresCarrees = [];
-            console.log("============> "+i+"/"+indicators.length);
+            var current = i + 1;
+            console.log("============> "+current+"/"+indicators.length);
             console.log("============> "+indicators[i].code);
             for(var countryCode in indicator.countries){
                 if(indicator.countries[ countryCode ].similarities != undefined){
@@ -153,10 +154,13 @@ Meteor.methods({
                     for( var year in countryYears ){
                         if(secondCarrees != undefined &&
                             firstCarrees != undefined){
-                            distanceByYear.push(
-                            distanceEuclidienne( new Point(year, firstCarrees.a * parseInt( year ) + firstCarrees.b),
-                                                new Point(year, secondCarrees.a * parseInt( year ) + secondCarrees.b ) ) );
+                            var distanceEuc = distanceEuclidienne( new Point(year, firstCarrees.a * parseInt( year ) + firstCarrees.b),
+                                                    new Point(year, secondCarrees.a * parseInt( year ) + secondCarrees.b ) );
+                            distanceByYear.push( distanceEuc );
                         }
+                    }
+                    if(distanceByYear.length == 0){
+                        continue;
                     }
                     var otherDistance = moyenne( distanceByYear );
                     //si la nouvelle distance est plus petite
@@ -174,7 +178,31 @@ Meteor.methods({
                         }
                     }
                 }
-                indicator.countries[ firstCountryCode ].similarities = similarList;
+                //on sort la list
+                var tmpDistance = [];
+                for(var t = 0; t < similarList.length; t++){
+                    tmpDistance.push( similarList[t].distance );
+                }
+                //on tri en croissant
+                triRapide(tmpDistance, 0, tmpDistance.length - 1);
+                //on fait la correspondance avec les codes pays
+                var saveList = [];
+                //console.log(tmpDistance.join(', '));
+                for(var t = 0; t < tmpDistance.length; t++){
+                    for(var s = 0; s < similarList.length; s++){
+                        if(similarList[s].distance == tmpDistance[t]){
+                            //on ajoute
+                            saveList.push( similarList[s].code );
+                            //console.log(similarList[s].code+ ' : '+similarList[s].distance);
+                            //on supprime de l'ancienne liste
+                            similarList.splice(s, 1);
+                            break;
+                        }
+                    }
+                }
+                //console.log("=============================");
+                //on save seulement les codes
+                indicator.countries[ firstCountryCode ].similarities = saveList;
                 //on save en bd les 5 pays les plus cohérents
                 Indicators.update(indicator._id, {
                     $set: {countries: indicator.countries }
@@ -183,6 +211,6 @@ Meteor.methods({
             }
 
         }
-
+        console.log('DONE: calculate similarities..');
     }
 });

@@ -7,6 +7,31 @@
 distanceEuclidienne = function( firstPoint, secondPoint ){
     var distanceX = Math.pow( firstPoint.getX() - secondPoint.getX(), 2);
     var distanceY = Math.pow( firstPoint.getY() - secondPoint.getY(), 2);
+	return arrondi( Math.sqrt(distanceX + distanceY), 4 );
+}
+permutation = function( list, a, b){
+    var tmp = list[a];
+    list[a] = list[b];
+    list[b] = tmp;
+}
+partition = function( list, debut, fin){
+    var compteur = debut;
+    var pivot = list[debut];
+    for(var i = debut + 1; i <= fin; i++){
+        if(list[i] < pivot){
+            compteur++;
+            permutation( list, compteur, i);
+        }
+    }
+    permutation( list, debut, compteur);
+    return compteur;
+}
+triRapide = function( list, debut, fin ){
+    if(fin - debut > 1){
+        var positionPivot = partition(list, debut, fin);
+        triRapide(list, debut, positionPivot - 1);
+        triRapide(list, positionPivot + 1, fin);
+    }
 }
 /**
 *   @param point
@@ -28,7 +53,7 @@ covariance = function( point ){
     for (var p = 0; p < point.length; p++) {
         cov += (x[p] - moyenne(x)) * (y[p] - moyenne(y));
     }
-    return arrondi(cov / point.length, 6);
+    return arrondi(cov / point.length, 4);
 }
 /**
 * @param a
@@ -47,11 +72,11 @@ arrondi = function( a, n ) {
 */
 moyenne = function( list ) {
 
-    var sigma = 0.0;
+    var sigma = 0;
     for (var i = 0; i < list.length; i++) {
         sigma += list[i];
     }
-    return arrondi(sigma / list.length, 6);
+    return arrondi(sigma / list.length, 4);
 }
 /**
 *
@@ -66,7 +91,7 @@ ecartType = function( list ) {
     for (var i = 0; i < list.length; i++) {
         sigma += Math.pow(list[i], 2);
     }
-    return arrondi(Math.sqrt(sigma / list.length - Math.pow(moyenne( list ), 2)), 6);
+    return arrondi(Math.sqrt(sigma / list.length - Math.pow(moyenne( list ), 2)), 4);
 }
 /**
 *   @param list
@@ -89,7 +114,7 @@ moindresCarrees = function( list ){
         listX.push( list[x].getX() );
         listY.push( list[x].getY() );
     }
-    var a = arrondi( covariance( list ) / variance( listX ), 6 );
-    var b = arrondi( moyenne( listY ) - a * moyenne( listX ), 6);
+    var a = arrondi( covariance( list ) / variance( listX ), 4);
+    var b = arrondi( moyenne( listY ) - a * moyenne( listX ), 4);
     return new Equation(a, b);
 }

@@ -62,7 +62,7 @@
     {{#if equals typeChoice "classement"}}
     <span class="selection"> {{ position }} <img src="/images/flags/16/{{name_en}}.png"
         onerror="this.style.display='none'"
-        alt="{{name_fr}}" /><a src="#{{ name }}"> {{ name_fr }}</a> : {{value}} <span class="removeCountrySelected">&times;</span>
+        alt="{{name_fr}}" /><a href="/#{{name_fr}}"> {{ name_fr }}</a> : {{value}} <span class="removeCountrySelected">&times;</span>
     </span>
     {{else}}
     <span class="selection"> <img src="/images/flags/16/{{name_en}}.png"
@@ -73,7 +73,7 @@
 </template>
 <template name="indicatorSelected">
     {{#if equals typeChoice "classement"}}
-    <span class="selection">{{ name }} <input type="radio" class="indiceSelection" name="indiceSelection" id="{{code}}" {{checkSelection}}></span>
+    <span class="selection"><input type="radio" class="indiceSelection" name="indiceSelection" id="{{code}}" {{checkSelection}}>{{ name }} <span class="checkIndicator">&times;</span></span>
     {{else}}
     <span class="selection"> {{ name }} <span class="checkIndicator">&times;</span></span>
     {{/if}}

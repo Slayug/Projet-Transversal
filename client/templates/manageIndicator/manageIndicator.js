@@ -9,7 +9,7 @@ Template.indicator.helpers({
 		return Categories.find();
 	},
     functionsClassement: function( ){
-        return FunctionClassement.find( );
+        return sortFunction;
     },
 	equals: function(a, b){
 		return a === b;
@@ -65,10 +65,12 @@ Template.indicator.events({
 			$set: {id_category: idCategory}
 		});
 	},
-    'change .select-functionClassement': function( e ){
+    'change .select-function': function( e ){
         var idFunction = $(event.target).find( 'option:selected' ).val( );
-        FunctionClassement.update( this._id, {
+        console.log( idFunction );
+        Indicators.update( this._id, {
             $set: {id_function: idFunction }
         });
+        console.log( Indicators.find( { _id: this._id } ).fetch( ) );
     }
 })

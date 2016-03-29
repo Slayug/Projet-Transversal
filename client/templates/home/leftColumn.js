@@ -1,5 +1,5 @@
 
-Session.setDefault( "similarCountries", [] );
+Session.set( "similarCountries", [] );
 Template.leftColumn.rendered = function() {
     //inject typeahead
     Meteor.typeahead.inject();
@@ -41,7 +41,6 @@ Template.leftColumn.helpers({
 Template.similarCountry.helpers({
     countrySelected: function(){
         var countries = Session.get( "countries" );
-        console.log(this);
         for(var c = 0; c < countries.length; c++){
             if(countries[c].name_fr == this.name_fr){
                 return true;
@@ -77,7 +76,7 @@ var addCountryFromName = function( countryName ){
         Session.set( "countries", countries );
         $('.typeahead').typeahead('close');
         //update similar countries
-        calculateSimilarCountries( );
+        updateSimilarCountries( );
     }
 }
 var addIndicatorFromSearch = function(){
@@ -99,17 +98,10 @@ var addIndicatorFromSearch = function(){
         //Update the session
         Session.set( "indicators", indicators );
         $('.typeahead').typeahead('close');
+        //update similar countries
+        updateSimilarCountries( );
 
-        calculateSimilarCountries( );
     }
-}
-/**
-*   Determines the similar countries
-*   from a list of countries
-*
-**/
-var calculateSimilarCountries = function( ){
-    
 }
 Template.leftColumn.events({
     'keyup .search-country': function( event ){

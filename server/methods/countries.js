@@ -149,6 +149,10 @@ Meteor.methods({
                 for(var secondCountryCode in indicator.countries){
                     //pour chaque année
                     //pour ensuite faire la moyenne
+                    if(firstCountryCode == secondCountryCode){
+                        //ignore the same country..
+                        continue;
+                    }
                     var secondCarrees = listMoindresCarrees[ secondCountryCode ];
                     var distanceByYear = [];
                     for( var year in countryYears ){

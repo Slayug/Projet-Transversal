@@ -27,6 +27,8 @@ Template.home.events({
 			countries.splice( indexCheck, 1 );
 			//Update the session
 			Session.set( "countries", countries );
+            //update similar countries
+            updateSimilarCountries( );
 		}
 	},
 	"click .checkIndicator": function( event, template ){
@@ -38,6 +40,8 @@ Template.home.events({
 			indicators.splice( indicators.indexOf( this.code ), 1 );
 			//Update the session
 			Session.set( "indicators", indicators );
+            //update similar countries
+            setSimilarCountries( );
 		}
 		//If the indice have been just checked
 		else{
@@ -45,7 +49,8 @@ Template.home.events({
 			indicators.push( this.code );
 			//Update the session
 			Session.set( "indicators", indicators );
-			//Session.set( "indicators", - Session.get( "indicators", ))
+            //update similar countries
+            updateSimilarCountries( );
 		}
 	}
 });

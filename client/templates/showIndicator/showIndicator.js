@@ -1,6 +1,10 @@
-Session.set( "countries", [ ] );
+Session.setDefault( "countries", [ ] );
 //indices: tableaux des codes indices.
 Session.setDefault( "indicators", [] );
+//le default permet de sauvegarder la session
+
+
+
 
 Template.showIndicator.helpers({
     createChart: function(){
@@ -9,6 +13,7 @@ Template.showIndicator.helpers({
                                .fetch( );
 
         var datas = []
+
 
         //Parcourt les indices sélectionés
         indicators.forEach( function( indice ) {
@@ -39,7 +44,6 @@ Template.showIndicator.helpers({
                 } );
             });
         });
-
         //When everything else is finished, draw the graph
         Meteor.defer( function( ){
             $('#chart').highcharts('StockChart', {

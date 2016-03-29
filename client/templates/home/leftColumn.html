@@ -35,6 +35,10 @@
         </div>
 
         <hr>
+        {{> leftColumnIndices }}
+    </div>
+</template>
+<template name="leftColumnIndices">
 
         <form class="form-inline search search-indicator">
             <label for="input-indicator">
@@ -66,9 +70,7 @@
             </div>
         </div>
         <hr>
-    </div>
 </template>
-
 <template name="homeCategory">
     <div class="panel panel-default category">
         <div class="panel-heading" role="tab" id="heading{{_id}}">
@@ -99,7 +101,7 @@
 </template>
 
 <template name="homeIndicator">
-    <li class="checkIndicator {{#if indicatorSelected}}selected{{/if}}">> {{name}}</li>
+    <li class="checkIndicator {{#if indicatorSelected}}selected{{/if}}"> {{name}}</li>
 </template>
 <template name="similarCountry">
     <li class="checkCountry {{#if countrySelected}}selected{{/if}}">>

@@ -117,7 +117,7 @@ NY.GDP.MKTP.CD</textarea>
 		</td>
         <td>
             <select class="select-function" id="functionClassement-for-{{_id}}">
-				{{#if equals id_functionClassement undefined}}
+				{{#if equals id_function undefined}}
                     <option value="" selected="selected">
                     </option>
                 {{/if}}
@@ -138,7 +138,7 @@ NY.GDP.MKTP.CD</textarea>
 	</option>
 </template>
 <template name="functionClassement">
-    <option value="{{_id}}" selected="{{#if equals _id ../id_functionClassement}}selected{{/if}}">
+    <option value="{{id}}" selected="{{#if equals id ../id_function}}selected{{/if}}">
     {{name}}
     </option>
 </template>

@@ -1,0 +1,21 @@
+<template name="classement">
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+            <th>Position</th>
+            <th class="Pays">Pays</th>
+            <th>Valeur</th>
+        </thead>
+        <tbody>
+            {{#each countriesClassement}}
+            {{> countryClassement}}
+            {{/each}}
+        </tbody>      
+    </table>
+</template>
+<template name="countryClassement">
+    <tr>
+        <td>{{position}}</td>
+        <td>{{name}}</td>
+        <td>{{value}}</td>
+    </tr>
+</template>

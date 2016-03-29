@@ -22,10 +22,12 @@ Template.homeIndicator.helpers({
         }
     }
 });
-Template.leftColumn.helpers({
+Template.leftColumnIndices.helpers({
     categories: function(){
         return Categories.find().fetch();
-    },
+    }
+});
+Template.leftColumn.helpers({
     countries: function(){
         return Countries.find().fetch();
     },
@@ -80,6 +82,7 @@ var addCountryFromName = function( countryName ){
         $("#input-country").val("");
         //Update the session
         Session.set( "countries", countries );
+        console.log( countries );
         $('.typeahead').typeahead('close');
         //update similar countries
         updateSimilarCountries( );

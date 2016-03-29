@@ -5,7 +5,13 @@ Template.home.helpers({
 	indicatorsSelected: function(){
 		var indicators = Session.get( "indicators" );
 		return Indicators.find({ code: { $in: indicators } } );
-	}
+	},
+    typeChoice: function( ){
+        return Session.get( "typeChoice" );
+    },
+    equals: function( a, b ){
+        return a === b;
+    }
 });
 
 Template.home.events({
@@ -52,5 +58,48 @@ Template.home.events({
             //update similar countries
             updateSimilarCountries( );
 		}
-	}
+	},
+    "click #evolution": function( ){
+        Session.set( "typeChoice", "evolution" );
+    },
+    "click #classement": function( ){
+        Session.set( "typeChoice", "classement" );
+    }
+});
+
+Template.countrySelected.helpers({
+    typeChoice: function( ){
+        return Session.get( "typeChoice" );
+    },
+    equals: function( a, b ){
+        return a === b;
+    }
+});
+
+Template.indicatorSelected.helpers({
+    typeChoice: function( ){
+        return Session.get( "typeChoice" );
+    },
+    equals: function( a, b ){
+        return a === b;
+    },
+    indicatorSelected: function( ){
+        return Session.get( "indicatorSelected" );
+    },
+    checkSelection: function( ){
+        if( Session.get( "indicatorSelected" ) === this.code ){
+            return "checked";
+        }
+        else{
+            return "";
+        }
+    }
+});
+
+Template.indicatorSelected.events({
+    "click .indiceSelection": function( ){
+        console.log( "in click" );
+        Session.set( "indicatorSelected", this.code );
+        console.log( Session.get( "indicatorSelected" ) );
+    }
 });

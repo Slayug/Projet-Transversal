@@ -3,6 +3,11 @@
     {{> leftColumn}}
 
     <div id="container-middle" class="col-lg-10 col-md-10">
+        <div class="container-header">
+            <span>Affichage: </span>
+            <input type="radio" name="select-type" id="evolution" checked="checked">Evolution            
+            <input type="radio" name="select-type" id="classement">Classement
+        </div>
         <div id="container-header-economie" class="container-header">
             <i class="fa fa-globe"></i>
             <span>Économie(s) séléctionnée(s): </span>
@@ -18,8 +23,11 @@
             {{/each}}
         </div>
 
-
-        {{> showIndicator }}
+        {{#if equals typeChoice "evolution"}}
+            {{> showIndicator }}
+        {{else}}
+            {{> classement }}
+        {{/if}}
         <a style="margin-left:20px;" href="/manageIndicator">Import des indices </a>
         <a style="margin-left:20px;" href="/manageCountries">Import des pays</a>
     </div>
@@ -32,11 +40,22 @@
     </li>
 </template>
 <template name="countrySelected">
-    <span class="selection"><img src="/images/flags/16/{{name_en}}.png"
+    {{#if equals typeChoice "classement"}}
+    <span class="selection"> 1. <img src="/images/flags/16/{{name_en}}.png"
+        onerror="this.style.display='none'"
+        alt="{{name_fr}}" /><a src="#{{ name }}"> {{ name_fr }}</a> :  22313 <span class="removeCountrySelected">&times;</span>
+    </span>
+    {{else}}
+    <span class="selection"> <img src="/images/flags/16/{{name_en}}.png"
         onerror="this.style.display='none'"
         alt="{{name_fr}}" /> {{ name_fr }} <span class="removeCountrySelected">&times;</span>
     </span>
+    {{/if}}
 </template>
 <template name="indicatorSelected">
-    <span class="selection">{{ name }} <span class="checkIndicator">&times;</span></span>
+    {{#if equals typeChoice "classement"}}
+    <span class="selection">{{ name }} <input type="radio" class="indiceSelection" name="indiceSelection" id="{{code}}" {{checkSelection}}></span>
+    {{else}}
+        <span class="selection"> {{ name }} <span class="checkIndicator">&times;</span></span>
+    {{/if}}
 </template>

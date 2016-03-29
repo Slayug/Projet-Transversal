@@ -27,7 +27,7 @@
         <div id="similar-countries">
             <h4>Économies similaires:</h4>
             <ul>
-            <span>Pour: {{ firstCountrySelected }}</span>
+            <span>Pour: <a class="countrySelectedForSimilar" href="#">{{ firstCountrySelected }} &times;</a></span>
                 {{#each similarCountries}}
                 {{> similarCountry}}
                 {{/each}}

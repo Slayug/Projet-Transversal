@@ -7,6 +7,7 @@ Router.route('/', {
       Session.set( "indicators", [ "SP.POP.TOTL" ] );
       Session.set( "typeChoice", "evolution" );
       Session.set( "indicatorSelected", "SP.POP.TOTL" );
+      Session.set( "yearSelected", "2010" );
       Session.setDefault( "countriesClassement", [] );
       return [];
   },

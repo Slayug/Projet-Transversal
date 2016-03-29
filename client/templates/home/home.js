@@ -11,6 +11,16 @@ Template.home.helpers({
     },
     equals: function( a, b ){
         return a === b;
+    },
+    years: function( ){
+        return Session.get( "yearsClassement" );
+    },
+    year: function( ){
+        return Session.get( "yearSelected" );
+    },
+    selectedYear: function( ){
+        if( this == Session.get( "yearSelected" ) )
+            return "selected";
     }
 });
 
@@ -64,6 +74,10 @@ Template.home.events({
     },
     "click #classement": function( ){
         Session.set( "typeChoice", "classement" );
+    },
+    "change .select-year": function( ){
+        var year = $( event.target ).find( 'option:selected' ).val( );
+        Session.set( "yearSelected", year );
     }
 });
 
@@ -86,7 +100,7 @@ Template.countrySelected.helpers({
         var countriesArray = Session.get( "countriesClassement" );
         for( var i = 0; i < countriesArray.length; ++i ){
             if( countriesArray[ i ].name == this.name_fr ){
-                return countriesArray[ i ].years[ "2010" ];
+                return countriesArray[ i ].years[ Session.get( "yearSelected" ) ];
             }
         }
     }

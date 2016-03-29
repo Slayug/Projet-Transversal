@@ -12,6 +12,15 @@
                 <td>
                     <input type="radio" name="select-type" id="evolution" checked="checked"> Évolution
                     <input type="radio" name="select-type" id="classement"> Classement
+                {{#if equals typeChoice "classement"}}
+                <select class="select-year">
+                    {{#each years}}
+                    <option value="{{this}}" {{selectedYear}}>{{this}}</option>
+                    {{/each}}
+                </select>
+                {{/if}}
+                </td>
+                <td>
                 </td>
                 <td></td>
             </tr>

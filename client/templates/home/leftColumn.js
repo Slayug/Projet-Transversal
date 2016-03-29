@@ -135,5 +135,13 @@ Template.leftColumn.events({
     },
     'click .submit-indicator': function( event ){
         addIndicatorFromSearch();
+    },
+    'click .countrySelectedForSimilar': function( event ){
+        //remove first country
+        console.log("toto");
+        var countriesSelected = Session.get( "countries" );
+        countriesSelected.splice(0, 1);
+        Session.set("countries", countriesSelected);
+        updateSimilarCountries( );
     }
 });

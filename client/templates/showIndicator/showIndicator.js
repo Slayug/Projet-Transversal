@@ -1,6 +1,10 @@
-Session.set( "countries", [ ] );
+Session.setDefault( "countries", [ ] );
 //indices: tableaux des codes indices.
 Session.setDefault( "indicators", [] );
+//le default permet de sauvegarder la session
+
+
+
 
 Template.showIndicator.helpers({
     createChart: function(){
@@ -10,13 +14,13 @@ Template.showIndicator.helpers({
 
         var datas = []
 
+
         //Parcourt les indices sélectionés
         indicators.forEach( function( indice ) {
             //Sélectionne les valeurs des pays pour l'indice
             var countries = indice.countries;
             //Récupére les pays sélectionnés
             var countriesSelected = Session.get( "countries" );
-
             //Parcours les pays sélectionés, récupére les valeurs pour ce pays et les ajoute à datas
             countriesSelected.forEach( function( country ){
                 var countryYears = countries[ country.code ].years ;
@@ -38,7 +42,6 @@ Template.showIndicator.helpers({
                 } );
             });
         });
-
         //When everything else is finished, draw the graph
         Meteor.defer( function( ){
             $('#chart').highcharts('StockChart', {

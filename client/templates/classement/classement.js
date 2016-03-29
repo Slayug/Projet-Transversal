@@ -28,7 +28,8 @@ Template.classement.helpers({
         for( var i = 0; i < res.length; ++i ){
             res[ i ][ "position" ] = i+1;
         }
-        return res;
+        Session.set( "countriesClassement", res );
+        return Session.get( "countriesClassement" );
     }
 });
 

@@ -73,6 +73,22 @@ Template.countrySelected.helpers({
     },
     equals: function( a, b ){
         return a === b;
+    },
+    position: function( ){
+        var countriesArray = Session.get( "countriesClassement" );
+        for( var i = 0; i < countriesArray.length; ++i ){
+            if( countriesArray[ i ].name == this.name_fr ){
+                return countriesArray[ i ].position;
+            }
+        }
+    },
+    value: function( ){
+        var countriesArray = Session.get( "countriesClassement" );
+        for( var i = 0; i < countriesArray.length; ++i ){
+            if( countriesArray[ i ].name == this.name_fr ){
+                return countriesArray[ i ].years[ "2010" ];
+            }
+        }
     }
 });
 
@@ -91,15 +107,19 @@ Template.indicatorSelected.helpers({
             return "checked";
         }
         else{
-            return "";
+            if( Session.get( "indicators" ).length == 1 ){
+                Session.set( "indicatorSelected", this.code );
+                return "checked";
+            }
+            else{
+                return "";
+            }
         }
     }
 });
 
 Template.indicatorSelected.events({
     "click .indiceSelection": function( ){
-        console.log( "in click" );
         Session.set( "indicatorSelected", this.code );
-        console.log( Session.get( "indicatorSelected" ) );
     }
 });

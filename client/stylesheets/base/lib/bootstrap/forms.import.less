@@ -144,7 +144,7 @@ output {
     background-color: @input-bg-disabled;
     opacity: 1; // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655
   }
-  
+
   &[disabled],
   fieldset[disabled] & {
     cursor: @cursor-disabled;
@@ -444,7 +444,7 @@ input[type="checkbox"] {
     // In navbar-form, allow folks to *not* use `.form-group`
     .form-control {
       display: inline-block;
-      width: auto; // Prevent labels from stacking above inputs in `.form-group`
+      //width: auto; // Prevent labels from stacking above inputs in `.form-group`
       vertical-align: middle;
     }
 
@@ -460,7 +460,7 @@ input[type="checkbox"] {
       .input-group-addon,
       .input-group-btn,
       .form-control {
-        width: auto;
+        //width: auto;
       }
     }
 

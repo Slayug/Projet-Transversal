@@ -41,7 +41,7 @@ Template.home.events({
 			//Update the session
 			Session.set( "indicators", indicators );
             //update similar countries
-            setSimilarCountries( );
+            updateSimilarCountries( );
 		}
 		//If the indice have been just checked
 		else{

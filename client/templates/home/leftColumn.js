@@ -36,6 +36,12 @@ Template.leftColumn.helpers({
     },
     similarCountries: function(){
         return Session.get( "similarCountries" );
+    },
+    firstCountrySelected: function(){
+        var countries = Session.get( "countries" );
+        if(countries.length > 0){
+            return countries[0].name_fr;
+        }
     }
 });
 Template.similarCountry.helpers({

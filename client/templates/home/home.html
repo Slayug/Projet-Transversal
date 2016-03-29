@@ -2,35 +2,54 @@
 
     {{> leftColumn}}
 
-    <div id="container-middle" class="col-lg-10 col-md-10">
-        <div class="container-header">
-            <span>Affichage: </span>
-            <input type="radio" name="select-type" id="evolution" checked="checked">Evolution            
-            <input type="radio" name="select-type" id="classement">Classement
-        </div>
-        <div id="container-header-economie" class="container-header">
-            <i class="fa fa-globe"></i>
-            <span>Économie(s) séléctionnée(s): </span>
-            {{#each countriesSelected}}
-            {{> countrySelected}}
-            {{/each}}
-        </div>
-        <div id="container-header-indicator" class="container-header">
-            <i class="fa fa-line-chart"></i>
-            <span>Indice(s) séléctionné(s): </span>
-            {{#each indicatorsSelected}}
-            {{> indicatorSelected}}
-            {{/each}}
-        </div>
 
+    <div id="container-middle" class="col-lg-10 col-md-10">
+
+        <table>
+            <tr id="container-show" class="container-header">
+                <td class="container-title">
+                    <i class="fa fa-desktop"></i><span> Affichage: </span></td>
+                <td>
+                    <input type="radio" name="select-type" id="evolution" checked="checked"> Évolution
+                    <input type="radio" name="select-type" id="classement"> Classement
+                </td>
+                <td></td>
+            </tr>
+            <tr id="container-header-economie" class="container-header">
+                <td class="container-title"><i class="fa fa-globe"></i><span> Économie(s) séléctionnée(s): </span></td>
+                <td>
+                    {{#each countriesSelected}}
+                    {{> countrySelected}}
+                    {{/each}}
+                </td>
+                <td></td>
+            </tr>
+            <tr id="container-header-indicator" class="container-header">
+                <td class="container-title">
+                    <i class="fa fa-line-chart"></i>
+                    <span> Indice(s) séléctionné(s): </span>
+                </td>
+                <td>
+                    {{#each indicatorsSelected}}
+                    {{> indicatorSelected}}
+                    {{/each}}
+                </td>
+                <td>
+
+                </td>
+            </tr>
+
+
+        </table>
         {{#if equals typeChoice "evolution"}}
-            {{> showIndicator }}
+        {{> showIndicator }}
         {{else}}
-            {{> classement }}
+        {{> classement }}
         {{/if}}
         <a style="margin-left:20px;" href="/manageIndicator">Import des indices </a>
         <a style="margin-left:20px;" href="/manageCountries">Import des pays</a>
     </div>
+
 </template>
 
 
@@ -56,6 +75,6 @@
     {{#if equals typeChoice "classement"}}
     <span class="selection">{{ name }} <input type="radio" class="indiceSelection" name="indiceSelection" id="{{code}}" {{checkSelection}}></span>
     {{else}}
-        <span class="selection"> {{ name }} <span class="checkIndicator">&times;</span></span>
+    <span class="selection"> {{ name }} <span class="checkIndicator">&times;</span></span>
     {{/if}}
 </template>

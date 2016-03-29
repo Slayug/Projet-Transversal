@@ -101,9 +101,9 @@
 </template>
 
 <template name="homeIndicator">
-    <li class="checkIndicator {{#if indicatorSelected}}selected{{/if}}"> {{name}}</li>
+    <li class="checkIndicator {{#if indicatorSelected}}selected{{/if}}">{{ #if indicatorSelected }} <i class="fa fa-minus"></i> {{ else }} <i class="fa fa-plus"></i> {{ /if }} {{name}}</li>
 </template>
 <template name="similarCountry">
-    <li class="checkCountry {{#if countrySelected}}selected{{/if}}">>
-        <img src="/images/flags/16/{{ name_en }}.png" onerror="this.style.display='none'" alt="{{ name_fr }}"/> {{ name_fr }}</li>
+    <li class="checkCountry {{ #if countrySelected }}removeCountrySelected selected{{ /if }}">
+        {{ #if countrySelected }} <i class="fa fa-minus"></i> {{ else }} <i class="fa fa-plus"></i> {{ /if }} <img src="/images/flags/16/{{ name_en }}.png" onerror="this.style.display='none'" alt="{{ name_fr }}"/> {{ name_fr }}</li>
 </template>

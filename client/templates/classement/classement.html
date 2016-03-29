@@ -9,13 +9,13 @@
             {{#each countriesClassement}}
             {{> countryClassement}}
             {{/each}}
-        </tbody>      
+        </tbody>
     </table>
 </template>
 <template name="countryClassement">
-    <tr id="#{{name}}">
-        <td>{{position}}</td>
-        <td>{{name}}</td>
-        <td>{{value}}</td>
-    </tr>
+        <tr id="{{ name }}">
+            <td>{{position}}</td>
+            <td>{{name}}</td>
+            <td>{{value}}</td>
+        </tr>
 </template>

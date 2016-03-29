@@ -9,6 +9,7 @@ Template.classement.helpers({
     countriesClassement: function( ){
         //Get the indice
         var indice = Indicators.find( { code: Session.get( "indicatorSelected" ) } ).fetch( )[ 0 ];
+        console.log( sortFunction[ indice.id_function ].sort );
         //Get the countries for this indice
         var indiceCountries = indice.countries;
         var res = [];
@@ -23,7 +24,7 @@ Template.classement.helpers({
         }
         //Sort the array by they're value
         res.sort( function( a, b ){
-            return b.years[ "2010" ] - a.years[ "2010" ];
+            return sortFunction[ indice.id_function ].sort( a.years[ "2010" ], b.years[ "2010" ] );
         } );
         for( var i = 0; i < res.length; ++i ){
             res[ i ][ "position" ] = i+1;

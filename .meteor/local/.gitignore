@@ -1,0 +1,6 @@
+build
+bundler-cache
+shell
+plugin-cache
+isopacks
+cfs
